@@ -82,9 +82,9 @@ def gaussian_eval(relaxed, concentrated):
     intersection = []
     for i in range(len(results)):
         print(results[i], r_mean, c_mean)
-        if results[i]/100 < r_mean and results[i]/100 > c_mean:
+        if results[i] < r_mean and results[i] > c_mean:
             print(1)
-            intersection.append(results[i]/100)
+            intersection.append(results[i])
     print(len(intersection))
     V0 = intersection[0]
 

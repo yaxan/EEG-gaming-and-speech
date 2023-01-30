@@ -52,12 +52,12 @@ Loads data files
 relaxed_file = os.path.join(save_path,'relaxed.pickle')
 concentrated_file = os.path.join(save_path,'concentrated.pickle')
 
-file = open(relaxed_file, 'rb')
-relaxed_data = pickle.load(file) #shape: [num relaxed data samples, length of time series]
-file.close()
-file = open(concentrated_file, 'rb')
-concentrated_data = pickle.load(file)
-file.close()
+file1 = open(relaxed_file, 'rb')
+relaxed_data = pickle.load(file1) #shape: [num relaxed data samples, length of time series]
+file1.close()
+file2 = open(concentrated_file, 'rb')
+concentrated_data = pickle.load(file2)
+file2.close()
 relaxed_data = np.array(relaxed_data) 
 concentrated_data = np.array(concentrated_data)
 print("There are", relaxed_data.size, "relaxed data samples")
@@ -77,21 +77,21 @@ for index, time_series in enumerate(relaxed_data):
 for index, time_series in enumerate(concentrated_data):
     ps = get_power_spectrum(time_series)
     concentrated_rms[index] = get_rms_voltage(ps, freq_min, freq_max, freq, nsamples)
-
-V0, wrong_relax, wrong_concentrate = gaussian_eval(relaxed_rms, concentrated_rms)
+np.savetxt('test.txt', concentrated_rms, delimiter = " ")
+V0, wrong_relax, wrong_concentrate = gaussian_eval(relaxed_rms[:30], concentrated_rms[:30])
 #These values are needed for plotting gaussian distributions
-r_mean = np.mean(relaxed_rms)
-r_std = np.std(relaxed_rms)
-c_mean = np.mean(concentrated_rms)
-c_std = np.std(concentrated_rms)
+r_mean = np.mean(relaxed_rms[:30])
+r_std = np.std(relaxed_rms[:30])
+c_mean = np.mean(concentrated_rms[:30])
+c_std = np.std(concentrated_rms[:30])
 xpoints = np.linspace(c_mean-4*c_std, r_mean+4*r_std, 1000)
 
 """
 Plots results of gaussian analysis
 """
 fig, ax = plt.subplots()
-ax.hist(relaxed_rms, bins=6, density=True, label='Relaxed')
-ax.hist(concentrated_rms, bins=6, density=True, label='Concentrated')
+ax.hist(relaxed_rms[:30], bins=6, density=True, label='Relaxed')
+ax.hist(concentrated_rms[:30], bins=6, density=True, label='Concentrated')
 ax.plot(xpoints, norm.pdf(xpoints, r_mean, r_std), linestyle='--', color='red') #Relaxed gaussian dist
 ax.plot(xpoints, norm.pdf(xpoints, c_mean, c_std), linestyle='--', color='green') #Concentrated gaussian dist
 plt.axvline(V0, color='purple', linestyle='--', label='Cutoff Voltage')
