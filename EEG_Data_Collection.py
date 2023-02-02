@@ -37,7 +37,7 @@ print()
 
 adc = ADS.ADS1115(i2c)
 adc.mode = Mode.CONTINUOUS
-adc.gain = 2/3
+adc.gain = 1
 adc.data_rate = SPS
 
 
@@ -89,8 +89,7 @@ while end_program != 'y': #Loops every time user records data
     for i in range(nsamples): #Collects data every sinterval
         st = time.perf_counter()
         chan = AnalogIn(adc, ADS.P2, ADS.P3)
-
-        time_series[i] = 0.001*chan.value #Times 0.001 since adc measures in mV
+        time_series[i] = chan.value*(4.096/32767)
         time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
         while (time.perf_counter() - st) <= sinterval:
             pass

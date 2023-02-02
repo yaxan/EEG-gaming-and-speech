@@ -78,6 +78,7 @@ for index, time_series in enumerate(concentrated_data):
     ps = get_power_spectrum(time_series)
     concentrated_rms[index] = get_rms_voltage(ps, freq_min, freq_max, freq, nsamples)
 np.savetxt('test.txt', concentrated_rms, delimiter = " ")
+np.savetxt('testr.txt', relaxed_rms, delimiter = " ")
 V0, wrong_relax, wrong_concentrate = gaussian_eval(relaxed_rms[:30], concentrated_rms[:30])
 #These values are needed for plotting gaussian distributions
 r_mean = np.mean(relaxed_rms[:30])
