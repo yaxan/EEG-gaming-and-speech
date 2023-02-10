@@ -22,7 +22,7 @@ from analysis_tools import get_power_spectrum, get_rms_voltage, gaussian_eval, g
 
 #These values should match saved data being loaded
 ACQTIME = 5
-SPS = 920 #Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300.
+SPS = 860 #Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300.
 nsamples = int(ACQTIME*SPS)
 sinterval = 1.0/SPS
 freq_min = 8 #min freq of alpha waves

@@ -19,7 +19,9 @@ from adafruit_ads1x15.ads1x15 import Mode
 from adafruit_ads1x15.analog_in import AnalogIn
 import board
 import busio
+import json
 import scipy as sp
+from scipy import signal
 
 ACQTIME = 5
 SPS = 860 #Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300.
@@ -86,7 +88,7 @@ while end_program != 'y': #Loops every time user records data
     #adc.read(2, True)
     time_series = np.zeros(nsamples, 'float')
     sos = sp.signal.butter(10, 60, 'lowpass', fs=860, output='sos')
-    filtered = sp.signal.sosfilt(sos, nsamples)
+    
     t0 = time.perf_counter()
     for i in range(nsamples): #Collects data every sinterval
         st = time.perf_counter()
@@ -95,17 +97,18 @@ while end_program != 'y': #Loops every time user records data
         time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
         while (time.perf_counter() - st) <= sinterval:
             pass
+    filtered = sp.signal.sosfilt(sos,time_series)
     t = time.perf_counter() - t0    
     print('Time elapsed: %.9f s.' % t)
 
     freq = np.fft.fftfreq(nsamples, d=1.0/SPS)
-    ps = get_power_spectrum(time_series)
+    ps = get_power_spectrum(filtered)
     rms = get_rms_voltage(ps, freq_min, freq_max, freq, nsamples)
     print('RMS of Alpha Wave Voltage: ', rms)
     
     f1, ax1 = plt.subplots()
     times = np.arange(0, ACQTIME, sinterval)
-    ax1.plot(times, time_series)
+    ax1.plot(times, filtered)
     ax1.set(xlabel='Time (s)', ylabel='Voltage', title='Raw Signal')    
     f1.show()
     
@@ -116,8 +119,8 @@ while end_program != 'y': #Loops every time user records data
     f2.show()
     
     f3, ax3 =plt.subplots()
-    brain_wave = get_brain_wave(time_series,freq_min,freq_max,freq)
-    ax3.plot(times, time_series)
+    brain_wave = get_brain_wave(filtered,freq_min,freq_max,freq)
+    ax3.plot(times, filtered)
     ax3.set(xlabel='Time (s)', ylabel='Voltage', title='Brain Alpha Wave')    
     f3.show()
     
@@ -132,6 +135,8 @@ while end_program != 'y': #Loops every time user records data
                 file = open(exp_file, 'wb')
                 pickle.dump(brain_data, file)
                 file.close()
+                
+				
             else: #creates new file to save
                 brain_data = [time_series]
                 file = open(exp_file, 'wb')
