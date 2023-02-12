@@ -1,11 +1,12 @@
 """
-EEG_bird is a game modeled after the popular flappy bird game, but adjusted to take EEG brain waves as input. In general, the more concentrated the higher bird flies, the more relaxed/eye closed the lower bird flies. To make the bird motion smoother, we make the concentration level correspond not directly to the height of the bird, but the velocity of the bird (velocity positive when bird concentrated, negative when relaxed). More detailed description: the concentration level concentration voltage - CUTOFF, normalized by the calibration up-low level, multiplied by some factor, is the velocity of the bird (this is given by the line of code: bird_rect.centery += 512 * VELOCITY * (1/sps) * ((rms_value-CUTOFF)/(high-low))
+EEG_bird is a game modeled after the popular flappy bird game, but adjusted to take EEG brain waves as input. In general, the more concentrated the higher bird flies, 
+the more relaxed/eye closed the lower bird flies. To make the bird motion smoother, we make the concentration level correspond not directly to the height of the bird, but the 
+velocity of the bird (velocity positive when bird concentrated, negative when relaxed). More detailed description: the concentration level concentration voltage - CUTOFF, 
+normalized by the calibration up-low level, multiplied by some factor, is the velocity of the bird 
+(this is given by the line of code: bird_rect.centery += 512 * VELOCITY * (1/sps) * ((rms_value-CUTOFF)/(high-low))
 
-Even though the original flappy bird game is hard, using EEG signal as input makes the game even harder. There are many parameters one can change to adjust the difficulty level and make the game playable. These parameters are basically everything that is captalized (CUTOFF and everything under "Parameters related to game difficulty")
-
-One important thing to check is that the main game loop is indeed running at the rate of "sps"/"MAX_FRAME_RATE" per second. The code guarantees this using the pygame.time.Clock.tick(MAX_FRAME_RATE). I have tested sps = 128 in mac and in RPI: surprisingly, RPI is able to meet this sps standard but mac runs slower. In general, this should be checked before applying the code.
-
-Some other minor details to note: in the beginning rms are 0 so bird will easily die. But since we currently do not stop take data when game is in "game over state", this should be fine after the first game play.
+Even though the original flappy bird game is hard, using EEG signal as input makes the game even harder. There are many parameters one can change to adjust the difficulty 
+level and make the game playable. These parameters are basically everything that is captalized (CUTOFF and everything under "Parameters related to game difficulty")
 
 Ruining Zhang
 6/4/2021
@@ -29,7 +30,7 @@ from analysis_tools import get_power_spectrum, get_rms_voltage
 
 
 """
-Parameters related to game difficulty
+Game parameters
 """
 TOP_BOTTOM_SEP = 200 # how much one want the top and bottom pipe to be separated by
 FLOOR_RATE = 1 # how fast floor moving left
@@ -42,20 +43,34 @@ INITIAL_BIRD_Y = 50 # initial y coordinate of the bird
 VELOCITY = 0.5 # basically the proportionality factor between the eeg signal and bird velocity in game play
 
 """
+ADC parameters
+"""
+sps = MAX_FRAME_RATE # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
+sinterval = 1.0/sps
+sampletime = 0.5 # how long to look back in time for current alpha waves
+time_series_len = int(sampletime * sps)
+time_series = np.zeros(time_series_len)
+freq = np.fft.fftfreq(time_series_len, d=1/sps) #Gets frequencies in Hz/sec
+freq_min = 8 #minimum freq in Hz for alpha waves
+freq_max = 12 #maximum freq in Hz for alpha waves
+i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)
+adc = ADS.ADS1115(i2c)
+adc.mode = Mode.CONTINUOUS
+adc.gain = 1
+adc.data_rate = sps
+calibration_time = 5
+
+"""
 Functions
 """
 def calibration(calibration_time,sps,freq_min=8,freq_max=12):
-    """
-    Takes "sps" data per second for "calibration_time" seconds
-    Return the rms of the whole calibration time period
-    """
     nsamples = calibration_time*sps
     interval = 1/sps
     time_series = np.zeros(nsamples)
     t0 = time.perf_counter()
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     
-    for i in range(nsamples): #Collects data every sinterval
+    for i in range(nsamples): #Collects data every interval
         st = time.perf_counter()
         time_series[i] = chan.value*(4.096/32767)
         time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
@@ -71,38 +86,26 @@ def calibration(calibration_time,sps,freq_min=8,freq_max=12):
         print('rms', rms)
     return rms
 
-# The dimensions of images in the game explain the number choices in the code
-# 450 is the floor y coordinate
-# Game interface is 288 in x and 512 in y.
-
+# function to draw 2 floor images next to each other
 def draw_floor():
-    """
-    Function to draw 2 floor images next to each other
-    """
     screen.blit(floor_surface,(floor_x_pos,450))
     screen.blit(floor_surface,(floor_x_pos+288,450))
-    
+
+# create new pipe with random height in the pipe height list
 def create_pipe():
-    """
-    Create new pipe with random height in the pipe height list
-    """
     random_height = random.choice(PIPE_HEIGHT)
     bottom_pipe = pipe_surface.get_rect(midtop = (350,random_height))
-    top_pipe = pipe_surface.get_rect(midbottom = (350,random_height - TOP_BOTTOM_SEP)) # 350 is just a number choice > 288. Create the pipe a little beyond the screen x dimension
+    top_pipe = pipe_surface.get_rect(midbottom = (350,random_height - TOP_BOTTOM_SEP))
     return bottom_pipe, top_pipe
-    
+
+# Take the pipe list as argument, move them to left (the same rate as floor?)
 def move_pipes(pipes):
-    """
-    Take the pipe list as argument, move them to left (the same rate as floor?)
-    """
     for pipe in pipes:
         pipe.centerx -= PIPE_RATE
     return pipes
 
+# Draw pipes in pipe list
 def draw_pipes(pipes):
-    """
-    Draw pipes in pipe list
-    """
     for pipe in pipes:
         # draw bottom pipe
         if pipe.bottom >= 512:
@@ -112,10 +115,8 @@ def draw_pipes(pipes):
             flip_pipe = pygame.transform.flip(pipe_surface, False, True) # false flip in x direction True for flip in y direction
             screen.blit(flip_pipe,pipe)
 
+# Check if bird_rect is colliding with any of the pipe_rect, also hit the window frame
 def check_collision(pipes):
-    """
-    Check if bird_rect is colliding with any of the pipe_rect, also hit the window frame
-    """
     for pipe in pipes:
         if bird_rect.colliderect(pipe):
             return False
@@ -142,29 +143,6 @@ def update_score(score, high_score):
         high_score = score
     return high_score
 
-
-"""
-ADC Data-taking Paramters
-"""
-sps = MAX_FRAME_RATE # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
-sinterval = 1.0/sps
-sampletime = 0.5 # how long to look back in time for current alpha waves
-time_series_len = int(sampletime * sps)
-time_series = np.zeros(time_series_len)
-freq = np.fft.fftfreq(time_series_len, d=1/sps) #Gets frequencies in Hz/sec
-freq_min = 8 #minimum freq in Hz for alpha waves
-freq_max = 12 #maximum freq in Hz for alpha waves
-i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)
-adc = ADS.ADS1115(i2c)
-adc.mode = Mode.CONTINUOUS
-adc.gain = 1
-adc.data_rate = sps
-
-"""
-Calibration code: defines low level as concentrated state and up level as relaxed state
-"""
-calibration_time = 5
-
 input('Press Enter to start %.1f s calibration for relaxed data' % calibration_time)
 print()
 high = calibration(calibration_time,sps)
@@ -175,13 +153,12 @@ low = calibration(calibration_time,sps)
 
 mid = 0.5 * low+ 0.5 * high
 
-
 """
 Game Section
 """
 # initializing steps
 pygame.init()
-screen = pygame.display.set_mode((600,1200))
+screen = pygame.display.set_mode((288,512))
 clock = pygame.time.Clock()
 game_font = pygame.font.Font('04B_19.TTF',20)
 
@@ -210,28 +187,19 @@ game_over_rect = game_over_surface.get_rect(center = (144, 256))
 
 
 """
-Main game loop
-
-1. Need to test sps or max_frame_rate to make sure the code is running as fast as indicated by sps. This is important to make sure fft is accurate. The ### codes are for testing this.
-
-2. "CUTOFF" defined right below here is another game parameter that helps with game play. Notice that the CUTOFF is very much shifted towards low level because it is very hard to relax during game play, whereas one try to do max relax (require closed eyes) during calibration. Thus, shifting the CUTOFF between relaxed and concentrated towards the relaxed direction helps to give a larger part of the game play in the concentrate region.
+Game Loop
 """
 
-CUTOFF = 0.75* low+ 0.25 * high
+input('Press Enter to start the game')
 
-input('Press <Enter> to start the game')
-
-
-###t0 = time.perf_counter()
-###times = []
-###for i in range(128):
 chan = AnalogIn(adc, ADS.P2, ADS.P3)
+CUTOFF = 0.75* low+ 0.25 * high
 
 while True:
 
     # data taking + calculate RMS
     time_series = np.roll(time_series, -1) #rolls all voltage values back 1.
-    time_series[-1] = chan.value*(4.096/32767) #0.001 to convert mV -> V, adc ground is 3.3 volts above circuit ground, puts into most current time_series point
+    time_series[-1] = chan.value*(4.096/32767)
     ps = get_power_spectrum(time_series)
     rms_value = get_rms_voltage(ps, freq_min, freq_max, freq, time_series_len)
     
@@ -262,7 +230,6 @@ while True:
         floor_x_pos = 0
         
     if game_active:
-        # more concentrate = higher
         bird_rect.centery += 512 * VELOCITY * (1/sps) * ((rms_value-CUTOFF)/(high-low))
         screen.blit(bird_surface,bird_rect)
         game_active = check_collision(pipe_list)
@@ -277,13 +244,8 @@ while True:
         screen.blit(game_over_surface, game_over_rect)
         high_score = update_score(score, high_score)
         score_display('game_over')
-        # when game is over, the bird's y coordinate should stay at the middle
         bird_rect.centery = 512 * mid/(high-low)
         
     pygame.display.update()
     
     clock.tick(MAX_FRAME_RATE)
-    
-    ###times.append(time.perf_counter()-t0)
-
-###print(times)
