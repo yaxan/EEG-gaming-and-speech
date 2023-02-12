@@ -60,6 +60,7 @@ while True: #Loops every time user records data
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
     t.append(time.perf_counter())
+    print(chan.value*(4.096/32767) - 3.3)
 
     drawnow(make_fig)
 
