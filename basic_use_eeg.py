@@ -12,11 +12,9 @@ sinterval = 1.0/SPS
 freq_min = 8 #minimum frequency for alpha waves
 freq_max = 12 #maximum frequency for alpha waves
 
-import sys
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-from adafruit_ads1x15.ads1x15 import ADS1x15
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.ads1x15 import Mode
 from adafruit_ads1x15.analog_in import AnalogIn
