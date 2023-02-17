@@ -24,6 +24,8 @@ import collections
 import os
 import board
 import busio
+import scipy as sp
+from scipy import signal
 
 sys.path.insert(1, os.path.dirname(os.getcwd()))
 from analysis_tools import get_power_spectrum, get_rms_voltage
@@ -70,20 +72,24 @@ def calibration(calibration_time,sps,freq_min=8,freq_max=12):
     t0 = time.perf_counter()
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     
+    #sos = sp.signal.butter(10, 60, 'lowpass', fs=860, output='sos')
+    
     for i in range(nsamples): #Collects data every interval
         st = time.perf_counter()
         time_series[i] = chan.value*(4.096/32767)
         time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
         while (time.perf_counter() - st) <= interval:
             pass
+    #filtered = sp.signal.sosfilt(sos,time_series)
     t = time.perf_counter() - t0
     freq = np.fft.fftfreq(nsamples, d=1.0/sps)
     ps = get_power_spectrum(time_series)
     rms = get_rms_voltage(ps, freq_min, freq_max, freq, nsamples)
-    if print_time:
-        plt.plot(time_series)
-        plt.show()
-        print('rms', rms)
+
+    plt.plot(time_series)
+    plt.show()
+    print('rms', rms)
+
     return rms
 
 # function to draw 2 floor images next to each other
