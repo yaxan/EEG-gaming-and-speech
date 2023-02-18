@@ -1,15 +1,14 @@
 """
-EEG_bird is a game modeled after the popular flappy bird game, but adjusted to take EEG brain waves as input. In general, the more concentrated the higher bird flies, 
-the more relaxed/eye closed the lower bird flies. To make the bird motion smoother, we make the concentration level correspond not directly to the height of the bird, but the 
-velocity of the bird (velocity positive when bird concentrated, negative when relaxed). More detailed description: the concentration level concentration voltage - CUTOFF, 
-normalized by the calibration up-low level, multiplied by some factor, is the velocity of the bird 
-(this is given by the line of code: bird_rect.centery += 512 * VELOCITY * (1/sps) * ((rms_value-CUTOFF)/(high-low))
+Modified version of flappy bird from: https://github.com/clear-code-projects/FlappyBird_Python
+Credits to https://github.com/ryanlopezzzz/EEG for guidance on how to use EEG data as inputs
 
-Even though the original flappy bird game is hard, using EEG signal as input makes the game even harder. There are many parameters one can change to adjust the difficulty 
-level and make the game playable. These parameters are basically everything that is captalized (CUTOFF and everything under "Parameters related to game difficulty")
+This game takes in EEG waves as input, the more relaxed (eyes closed), the more the bird goes up. In essence, blinking makes the bird jump.
+Game parameters can be changed to make the game easier or harder, and the values in CUTOFF should be adjusted to the player's preference.
 
-Ruining Zhang
-6/4/2021
+Currently, first run through the bird flies high off the map and requires a reset (space-bar) because there is no data at the start. I may or may not get around to fixing it.
+
+Yazan Masoud
+02/18/2023
 """
 
 import matplotlib.pyplot as plt
@@ -29,32 +28,18 @@ from scipy import signal
 
 sys.path.insert(1, os.path.dirname(os.getcwd()))
 from analysis_tools import get_power_spectrum, get_rms_voltage
-
-
-"""
-Game parameters
-"""
-TOP_BOTTOM_SEP = 200 # how much one want the top and bottom pipe to be separated by
-FLOOR_RATE = 1 # how fast floor moving left
-PIPE_RATE = 1 # how fast pipe moving left
-PIPE_HEIGHT = [200,300,400] # all the possible pipe heights
-PIPE_INTERVAL = 3000 # time interval between pipes, unit ms
-MAX_FRAME_RATE = 128 # Same as SPS, Caps the # frame/sample per second
-SCORE_RATE = 0.01
-INITIAL_BIRD_Y = 50 # initial y coordinate of the bird
-VELOCITY = 0.5 # basically the proportionality factor between the eeg signal and bird velocity in game play
+from analysis_data import rms_voltage_power_spectrum
 
 """
 ADC parameters
 """
-sps = MAX_FRAME_RATE # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
+sps = 250 # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
 sinterval = 1.0/sps
-sampletime = 0.5 # how long to look back in time for current alpha waves
-time_series_len = int(sampletime * sps)
-time_series = np.zeros(time_series_len)
-freq = np.fft.fftfreq(time_series_len, d=1/sps) #Gets frequencies in Hz/sec
-freq_min = 8 #minimum freq in Hz for alpha waves
-freq_max = 12 #maximum freq in Hz for alpha waves
+sampletime = 0.25 # how long to look back in time for current alpha waves
+raw_signal_len = int(sampletime * sps)
+raw_signal = np.zeros(raw_signal_len)
+min_freq = 8 #minimum freq in Hz for alpha waves
+max_freq = 12 #maximum freq in Hz for alpha waves
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)
 adc = ADS.ADS1115(i2c)
 adc.mode = Mode.CONTINUOUS
@@ -63,12 +48,25 @@ adc.data_rate = sps
 calibration_time = 5
 
 """
+Game parameters
+"""
+PIPE_SEP = 220 # Top and bottom pipe separation distance
+FLOOR_SPEED = 1 # Floor scroll speed
+PIPE_SPEED = 1 # Pipe scroll speed
+PIPE_HEIGHT = [200,300,400] # Pipe height possibilities
+PIPE_INTERVAL = 3000 # Time between pipes in ms
+SCORE_RATE = 0.005 # Rate at which score increases per tick
+INITIAL_BIRD_X = 50 # initial y coordinate of the bird
+VELOCITY = 0.5 # basically the proportionality factor between the eeg signal and bird velocity in game play
+GRAVITY = 1.1 # Rate at which the bird falls
+
+"""
 Functions
 """
-def calibration(calibration_time,sps,freq_min=8,freq_max=12):
+def calibration(calibration_time,sps,min_freq=8,max_freq=12):
     nsamples = calibration_time*sps
     interval = 1/sps
-    time_series = np.zeros(nsamples)
+    raw_signal = np.zeros(nsamples)
     t0 = time.perf_counter()
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     
@@ -76,17 +74,15 @@ def calibration(calibration_time,sps,freq_min=8,freq_max=12):
     
     for i in range(nsamples): #Collects data every interval
         st = time.perf_counter()
-        time_series[i] = chan.value*(4.096/32767)
-        time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
+        raw_signal[i] = chan.value*(4.096/32767)
+        raw_signal[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
         while (time.perf_counter() - st) <= interval:
             pass
-    #filtered = sp.signal.sosfilt(sos,time_series)
+    #filtered = sp.signal.sosfilt(sos,raw_signal)
     t = time.perf_counter() - t0
-    freq = np.fft.fftfreq(nsamples, d=1.0/sps)
-    ps = get_power_spectrum(time_series)
-    rms = get_rms_voltage(ps, freq_min, freq_max, freq, nsamples)
+    ps, rms = rms_voltage_power_spectrum(raw_signal, min_freq, max_freq, sps, nsamples)
 
-    plt.plot(time_series)
+    plt.plot(raw_signal)
     plt.show()
     print('rms', rms)
 
@@ -101,13 +97,13 @@ def draw_floor():
 def create_pipe():
     random_height = random.choice(PIPE_HEIGHT)
     bottom_pipe = pipe_surface.get_rect(midtop = (350,random_height))
-    top_pipe = pipe_surface.get_rect(midbottom = (350,random_height - TOP_BOTTOM_SEP))
+    top_pipe = pipe_surface.get_rect(midbottom = (350,random_height - PIPE_SEP))
     return bottom_pipe, top_pipe
 
 # Take the pipe list as argument, move them to left (the same rate as floor?)
 def move_pipes(pipes):
     for pipe in pipes:
-        pipe.centerx -= PIPE_RATE
+        pipe.centerx -= PIPE_SPEED
     return pipes
 
 # Draw pipes in pipe list
@@ -181,7 +177,7 @@ floor_surface = pygame.image.load('assets/base.png').convert()
 floor_x_pos = 0
 
 bird_surface = pygame.image.load('assets/bluebird-midflap.png').convert()
-bird_rect = bird_surface.get_rect(center = (INITIAL_BIRD_Y,256))
+bird_rect = bird_surface.get_rect(center = (INITIAL_BIRD_X,256))
 
 pipe_surface = pygame.image.load('assets/pipe-green.png').convert()
 pipe_list = [] # a list of pipes that pop up every second
@@ -199,15 +195,16 @@ Game Loop
 input('Press Enter to start the game')
 
 chan = AnalogIn(adc, ADS.P2, ADS.P3)
-CUTOFF = 0.75* low+ 0.25 * high
+#Change these through trial and error
+CUTOFF = 0.25* low+ 0.75 * high
+
 
 while True:
 
     # data taking + calculate RMS
-    time_series = np.roll(time_series, -1) #rolls all voltage values back 1.
-    time_series[-1] = chan.value*(4.096/32767)
-    ps = get_power_spectrum(time_series)
-    rms_value = get_rms_voltage(ps, freq_min, freq_max, freq, time_series_len)
+    raw_signal = np.roll(raw_signal, -1) #rolls all voltage values back 1.
+    raw_signal[-1] = chan.value*(4.096/32767)
+    ps, rms_value = rms_voltage_power_spectrum(raw_signal, min_freq, max_freq, sps, raw_signal_len)
     
     # game part
     for event in pygame.event.get(): # all events that pygame can detect
@@ -216,13 +213,12 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             # press space key to restart the game
-            if event.key == pygame.K_SPACE and game_active == False:
+            if event.key == pygame.K_SPACE:
                 game_active = True
                 pipe_list.clear()
-                bird_rect.center = (INITIAL_BIRD_Y,256)
+                bird_rect.center = (INITIAL_BIRD_X,256)
                 score = 0
         
-        #every PIPE_INTERVAL second, the event is triggered to create a new pipe
         if event.type == SPAWNPIPE:
             pipe_list.extend(create_pipe()) # extend allows list to include whatever that is in the tuple
     
@@ -230,13 +226,16 @@ while True:
     screen.blit(bg_surface,(0,0))
     
     # display and create continuously moving floor effect
-    floor_x_pos -= FLOOR_RATE
+    floor_x_pos -= FLOOR_SPEED
     draw_floor()
+
     if floor_x_pos <= -288:
         floor_x_pos = 0
         
     if game_active:
-        bird_rect.centery += 512 * VELOCITY * (1/sps) * ((rms_value-CUTOFF)/(high-low))
+        #flip the negative to reverse the controls (requires swapping values in CUTOFF), set gravity to 0 if doing this.
+        bird_rect.centery -= 512 * VELOCITY * (1/sps) * ((CUTOFF-rms_value)/(low-high))
+        bird_rect.centery += GRAVITY
         screen.blit(bird_surface,bird_rect)
         game_active = check_collision(pipe_list)
     
@@ -254,4 +253,4 @@ while True:
         
     pygame.display.update()
     
-    clock.tick(MAX_FRAME_RATE)
+    clock.tick(sps)
