@@ -1,5 +1,6 @@
 # EEG gaming
 Work in progress: DIY Brain-Computer Interface (BCI) to play games using alpha/beta waves with custom-made EEG circuit
+
 More details on how it works and how to replicate coming soon
 
 ## Live Flappy-Bird Demo
