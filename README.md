@@ -1,4 +1,4 @@
 # EEG-gaming
 
-https://user-images.githubusercontent.com/41130598/219846726-3f757683-68af-4418-a855-ae7c9d5584ed.mp4
+https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
