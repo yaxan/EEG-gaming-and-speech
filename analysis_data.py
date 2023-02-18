@@ -21,20 +21,19 @@ def rms_voltage_power_spectrum(time_series, min_freq, max_freq, SPS, nsamples, w
     #subtract the mean to ensure the time series is a zero-mean
     #Fourier assuems that time series is periodic with no DC offset
     time_series_zero_mean = time_series - np.mean(time_series)
-    fourier_coeffs = fft(time_series_zero_mean)
-    ps = np.abs(fourier_coeffs)**2/nsamples
+    fourier_coeffs = np.fft.fft(time_series_zero_mean)
+    ps = np.abs(fourier_coeffs)**2
     #____, ps = welch(time_series, fs=SPS)
     
     if window is not None:
         ps *= window #Apply window function to power spectrum
 
-    freq_mask = (frequencies >= min_freq) & (frequencies <= max_freq)
-    freq_range = frequencies[freq_mask]
+    freq_mask = (np.abs(frequencies) >= min_freq) & (np.abs(frequencies) <= max_freq)
     ps_range = ps[freq_mask]
 
     #Calculate RMS voltage using Parseval's Theorem
-    rms = np.sqrt(np.sum(ps_range) / (nsamples * (freq_range[1] - freq_range[0])))
-
+    rms = (1/nsamples) * np.sqrt(np.sum(ps_range))
+        
     return ps, rms
 
 def gaussian_eval(relaxed, concentrated):
