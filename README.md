@@ -9,7 +9,11 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
 ## Circuit
 ![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
 
-Schematic coming soon
+### Parts List
+coming soon
+
+### Schematic
+coming soon
 
 ## Credits
 
