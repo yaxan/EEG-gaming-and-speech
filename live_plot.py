@@ -8,36 +8,20 @@ sys.path.insert(1, os.path.dirname(os.getcwd())) #This allows importing files fr
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 from adafruit_ads1x15.ads1x15 import ADS1x15
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.ads1x15 import Mode
 from adafruit_ads1x15.analog_in import AnalogIn
 import board
 import busio
-import scipy as sp
-import keyboard
-
-from drawnow import drawnow
-
-def make_fig():
-    plt.axis([0,10,-1,1])
-    plt.scatter(t, y)  # I think you meant this
-
-plt.ion()  # enable interactivity
-fig = plt.figure()  # make a figure
+import itertools
 
 SPS = 860 #Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300.
 VRANGE = 6144 #Full range scale in mV. Options: 256, 512, 1024, 2048, 4096, 6144.
 sinterval = 1.0/SPS
 freq_min = 8 #min freq of alpha waves
 freq_max = 12 #max freq of alpha waves
-
-plt.ion() ## Note this correction
-fig=plt.figure()
-
-i = 0
-t=list()
-y=list()
 
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)
@@ -53,16 +37,26 @@ adc.data_rate = SPS
 
 print("press q to exit program")
 
-while True: #Loops every time user records data
+fig, ax = plt.subplots(1, 1)
+line, = ax.plot([], [], lw=2)
+ax.set_xlim(0, 10)
+ax.set_ylim(-1, 1)
 
-    st = time.perf_counter()
+t = list()
+y = list()
 
+def update(frame):
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
+    t.append(frame*sinterval)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
-    t.append(time.perf_counter())
-    print(chan.value*(4.096/32767) - 3.3)
 
-    drawnow(make_fig)
+    if frame*sinterval > 10:
+        t.pop(0)
+        y.pop(0)
 
-    while (time.perf_counter() - st) <= sinterval:
-        pass
+    line.set_data(t, y)
+
+    return line,
+
+anim = FuncAnimation(fig, update, frames=itertools.count(), interval=int(sinterval*1e3))
+plt.show()
