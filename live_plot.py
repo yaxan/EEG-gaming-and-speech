@@ -46,6 +46,8 @@ t = list()
 y = list()
 
 def update(frame):
+    st = time.perf_counter()
+    
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     t.append(frame*sinterval)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
@@ -56,7 +58,10 @@ def update(frame):
 
     line.set_data(t, y)
 
+    while (time.perf_counter() - st) <= sinterval-(1e-3):
+        pass
+
     return line,
 
-anim = FuncAnimation(fig, update, frames=itertools.count(), interval=int(sinterval*1e3))
+anim = FuncAnimation(fig, update, frames=itertools.count(), interval=1)
 plt.show()
