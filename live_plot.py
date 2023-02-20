@@ -54,9 +54,10 @@ def update(frame):
     t.append(st-ot)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
 
-    if t[-1] > 10:
+    if t[-1] > 10 and len(t) > 20:
         t.pop(0)
         y.pop(0)
+        ax.set_xlim(t[-1] - 10, t[-1])
         
     print(st)
 
