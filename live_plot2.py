@@ -37,7 +37,7 @@ while True: #Loops every time user records data
     #print(chan)
     t.append(time.perf_counter())
 
-    if time.perf_counter() > 10 and len(t) > 2:
+    if time.perf_counter() > 10 and len(t) > 20:
         t.pop(0)
         y.pop(0)
         axs[0].set_xlim(t[-1]-10, t[-1])
