@@ -49,10 +49,10 @@ def update(frame):
     st = time.perf_counter()
     
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
-    t.append(frame*sinterval)
+    t.append(st)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
 
-    if frame*sinterval > 10:
+    if st > 10:
         t.pop(0)
         y.pop(0)
 
