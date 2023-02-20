@@ -50,8 +50,6 @@ ot = time.perf_counter()
 def update(frame):
     st = time.perf_counter()
     
-    ot = st if len(t) == 0 else None     
-    
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     t.append(st-ot)
     y.append(chan.value*(4.096/32767) - 3.3) #ADC ground is 3.3 volts above circuit ground
