@@ -55,13 +55,12 @@ def update(frame):
     if t[-1] > 10:
         t.pop(0)
         y.pop(0)
+        
+    print(st)
 
     line.set_data(t, y)
 
-    while (time.perf_counter() - st) <= sinterval-(1e-3):
-        pass
-
     return line,
 
-anim = FuncAnimation(fig, update, frames=itertools.count(), interval=1)
+anim = FuncAnimation(fig, update, frames=itertools.count(), interval=sinterval*1e3)
 plt.show()
