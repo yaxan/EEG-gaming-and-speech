@@ -50,8 +50,7 @@ ot = time.perf_counter()
 def update(frame):
     st = time.perf_counter()
     
-    if len(t) == 0:
-        ot = st
+    ot = st if len(t) == 0 else None     
     
     chan = AnalogIn(adc, ADS.P2, ADS.P3)
     t.append(st-ot)
