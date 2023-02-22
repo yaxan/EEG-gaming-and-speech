@@ -13,7 +13,7 @@ import scipy as sp
 from scipy import signal
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
 import csv
-
+import pandas as pd
 
 #import files from parent folder
 sys.path.insert(1, os.path.dirname(os.getcwd())) 
@@ -106,6 +106,9 @@ while stopper != 'y': #Loops every time user records data
                 with open(file_path, 'a', newline='') as csvfile:
                     writer = csv.writer(csvfile)
                     writer.writerow(time_series)
+
+                    df = pd.read_csv(file_path, header=None)
+                    print(df.count()[0])
             #create a new file
             else: 
                 with open(file_path, 'a', newline='') as csvfile:
