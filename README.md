@@ -13,7 +13,7 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
 coming soon
 
 ### Schematic
-coming soon
+![EEGSchematic](https://user-images.githubusercontent.com/41130598/221038250-b1ed1cb0-f971-425f-80a6-f0f0f6b85027.png)
 
 ## Credits
 
