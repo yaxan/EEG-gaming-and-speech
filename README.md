@@ -37,7 +37,7 @@ Warning: Connecting electrodes to any part of your body can result in shock if a
 
 Stage 1: Instrument Amplifier (Gain: ~92)
 
-Stage 2: Notch (Gain: 1, Cutoff frequency: ~60Hz)
+Stage 2: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 Stage 3: High-Pass Filter (Gain: 1, Cutoff frequency: ~5Hz)
 
@@ -45,7 +45,7 @@ Stage 4: Low-Pass Filter (Gain: 1, Cutoff frequency: ~33Hz)
 
 Stage 5: Instrument Amplifier (Gain: ~46-500)
 
-Stage 6: Notch (Gain: 1, Cutoff frequency: ~60Hz)
+Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 
 ### Physical Circuit
