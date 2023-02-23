@@ -36,11 +36,17 @@ Warning: Connecting electrodes to any part of your body can result in shock if a
   Three electrodes are used, one at the FP2 region (one inch up from the naison and one inch right), one at the O2 region (one inch up from the inion and one inch right), and one on the earlobe or mastoid which connects to 3.3V ground. It's important to note the voltage values for the IAs and Op-Amps are with respect to the RPI's 3.3V ground, while the ADC uses the RPI's 0V ground. This is to up-shift the signal from the brain because the ADC does not handle negative values well, it's then shifted back down in the code. If you are attempting to reconstruct this circuit, it's important to have access to an oscilloscope and wave-function generator to debug and test it works fine before connecting to electrodes/ADC/RPI.
 
 Stage 1: Instrument Amplifier (Gain: ~92)
+
 Stage 2: Notch (Gain: 1, Cutoff frequency: ~60Hz)
+
 Stage 3: High-Pass Filter (Gain: 1, Cutoff frequency: ~5Hz)
+
 Stage 4: Low-Pass Filter (Gain: 1, Cutoff frequency: ~33Hz)
+
 Stage 5: Instrument Amplifier (Gain: ~46-500)
+
 Stage 6: Notch (Gain: 1, Cutoff frequency: ~60Hz)
+
 
 ### Physical Circuit
 ![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
