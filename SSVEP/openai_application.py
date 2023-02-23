@@ -28,7 +28,7 @@ max_freq = 12 #maximum freq in Hz for alpha waves
 calibration_time = 5
 
 # Set OpenAI API key
-openai.api_key = "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"
+openai.api_key = "<insert-key-here>"
 
 # Set the initial prompt
 ice_breaker = "Hello, how are you doing today?"
@@ -55,9 +55,9 @@ def generate_user_response(prompt):
         stop='. '
     )
     time.sleep(1) 
-    message1 = response.choices[0].text.strip().split(":")[1].strip()
+    message1 = response.choices[0].text.strip() #.split(":")[1].strip()
     message1 = message1.split("\n")[0].strip()
-    message2 = response.choices[1].text.strip().split(":")[1].strip()
+    message2 = response.choices[1].text.strip() #.split(":")[1].strip()
     message2 = message2.split("\n")[0].strip()
     
     return message1, message2
