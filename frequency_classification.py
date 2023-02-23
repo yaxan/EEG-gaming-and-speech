@@ -27,24 +27,23 @@ for i in range(30):
 
 print(df)
 
+from pyts.datasets import make_cylinder_bell_funnel
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from pyts.classification import LearningShapelets
 
 
-X_train, X_test, y_train, y_test = train_test_split(df.iloc[:, :-1], df.iloc[:, -1], test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(df.iloc[:, :-4], df.iloc[:, -1], test_size=0.2, random_state=42)
 
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+# Create a LearningShapelets object
+clf = LearningShapelets(random_state=42)
 
-rf = RandomForestClassifier(n_estimators=100, random_state=42)
-rf.fit(X_train, y_train)
+# Fit the classifier to the training data
+clf.fit(X_train, y_train)
 
+# Predict the classes of the test data
+y_pred = clf.predict(X_test)
 
-y_pred = rf.predict(X_test)
-print('Accuracy:', accuracy_score(y_test, y_pred))
-print(classification_report(y_test, y_pred))
-
+# Evaluate the performance of the classifier
+accuracy = clf.score(X_test, y_test)
+print('Accuracy:', accuracy)
 

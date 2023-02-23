@@ -28,7 +28,7 @@ max_freq = 12 #maximum freq in Hz for alpha waves
 calibration_time = 5
 
 # Set OpenAI API key
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Set the initial prompt
 ice_breaker = "Hello, how are you doing today?"
@@ -54,6 +54,7 @@ def generate_user_response(prompt):
         presence_penalty=0.7,
         stop='. '
     )
+    time.sleep(1) 
     message1 = response.choices[0].text.strip().split(":")[1].strip()
     message1 = message1.split("\n")[0].strip()
     message2 = response.choices[1].text.strip().split(":")[1].strip()
@@ -72,7 +73,7 @@ def generate_AI_response(prompt):
         presence_penalty=0.7,
         stop='.'
     )
-    print(response.choices[0].text.strip())
+    time.sleep(1) 
     return response.choices[0].text.strip()
 
 
@@ -152,7 +153,7 @@ while True:
             print("Bot: Goodbye!")
             break
         else:
-            AI_response = generate_user_response(prompt) 
+            AI_response = generate_AI_response(prompt) 
             print("Bot: " + AI_response)
             prompt = AI_response
     elif user_choice == "2":
@@ -167,7 +168,7 @@ while True:
             print("Bot: Goodbye!")
             break
         else:
-            AI_response = generate_user_response(prompt) 
+            AI_response = generate_AI_response(prompt) 
             print("Bot: " + AI_response)
             prompt = AI_response
     elif user_choice == "4":
