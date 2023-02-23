@@ -5,16 +5,18 @@ import time
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import butter, sosfilt 
 import board
 import busio
 import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.analog_in import AnalogIn
 import scipy as sp
 from scipy import signal
-
+from scipy.signal import butter, sosfilt
+from adafruit_ads1x15.analog_in import AnalogIn
 from gui import blinking_circles
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
+
+
+
 
 #ADC Params
 ACQTIME = 5
@@ -33,7 +35,6 @@ chan = AnalogIn(adc, ADS.P2, ADS.P3)
 
 fr1, fr2, fr3, fr4 = 8, 10, 12, 14 
 
-
 while True:
 	blinking_circles("a","b","c","d",fr1,fr2,fr3,fr4)
 	
@@ -44,7 +45,6 @@ while True:
 		raw_signal[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
 		while (time.perf_counter() - st) <= sinterval:
 			pass
-
 	t = time.perf_counter() - t0
 
 	ps1, rms1 = rms_voltage_power_spectrum(raw_signal, fr1, fr1, SPS, nsamples)
@@ -67,5 +67,6 @@ while True:
 		print("You're looking at: ", fr3, "Hz")
 	elif (largest == rms4):
 		print("You're looking at: ", fr4, "Hz")
+
 
 
