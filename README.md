@@ -21,7 +21,7 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
  * 1x 0-2kΩ Potentiometer
  * [3x OpenBCI Gold Cup Electrodes](https://shop.openbci.com/products/openbci-gold-cup-electrodes?_pos=1&_sid=645e136ca&_ss=r)
  * [Ten20 Conductive Neurodiagnostic Electrode Paste](https://shop.openbci.com/products/ten20-conductive-paste-8oz-jar)
- * ADS1115 16-Bit ADC
+ * Adafruit ADS1115 16-Bit ADC
  * Raspberry Pi 4 Model B 4GB RAM
 
  * Medical Tape (To stick on electrodes)
