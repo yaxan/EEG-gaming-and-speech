@@ -7,7 +7,6 @@ More details on how it works and how to replicate coming soon.
 https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
 ## Circuit
-![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
 
 ### Parts List
  * 2x AD623AN Instrument Amplifier
@@ -28,6 +27,9 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
 
 ### Schematic
 ![EEGSchematic](https://user-images.githubusercontent.com/41130598/221042409-423589c1-2b3c-4a02-94aa-657f63461b93.png)
+
+### Physical Circuit
+![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
 
 ## Credits
 
