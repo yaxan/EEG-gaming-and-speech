@@ -23,8 +23,8 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
  * [Ten20 Conductive Neurodiagnostic Electrode Paste](https://shop.openbci.com/products/ten20-conductive-paste-8oz-jar)
  * Adafruit ADS1115 16-Bit ADC
  * Raspberry Pi 4 Model B 4GB RAM
-
  * Medical Tape (To stick on electrodes)
+ * Keithley 2231A-30-3 Triple Channel DC Power Supply (Batteries work too)
 
 ### Schematic
 ![EEGSchematic](https://user-images.githubusercontent.com/41130598/221042409-423589c1-2b3c-4a02-94aa-657f63461b93.png)
