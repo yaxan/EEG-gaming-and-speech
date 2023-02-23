@@ -48,7 +48,7 @@ def blinking_circles(prompt1, prompt2, prompt3, prompt4, fr1, fr2, fr3, fr4):
 
     # run the game loop
     start_time = time.time()
-    while time.time() - start_time < 6:
+    while time.time() - start_time < 20:
 
         # handle events
         for event in pygame.event.get():
@@ -109,8 +109,6 @@ def blinking_circles(prompt1, prompt2, prompt3, prompt4, fr1, fr2, fr3, fr4):
         # Update the screen
         pygame.display.update()
 
-        # Wait for 1 millisecond to ensure the screen updates properly
 
     # Quit the program
     pygame.quit()
-

@@ -3,6 +3,8 @@ import sys
 sys.path.insert(1, os.path.dirname(os.getcwd())) #Allows importing files from parent folder
 import time
 import pickle
+import threading
+import multiprocessing
 import numpy as np
 import matplotlib.pyplot as plt
 import board
@@ -35,9 +37,7 @@ chan = AnalogIn(adc, ADS.P2, ADS.P3)
 
 fr1, fr2, fr3, fr4 = 8, 10, 12, 14 
 
-while True:
-	blinking_circles("a","b","c","d",fr1,fr2,fr3,fr4)
-	
+def data():
 	t0 = time.perf_counter()
 	for i in range(nsamples): #Collects data every interval
 		st = time.perf_counter()
@@ -51,13 +51,15 @@ while True:
 	ps2, rms2 = rms_voltage_power_spectrum(raw_signal, fr2, fr2, SPS, nsamples)
 	ps3, rms3 = rms_voltage_power_spectrum(raw_signal, fr3, fr3, SPS, nsamples)
 	ps4, rms4 = rms_voltage_power_spectrum(raw_signal, fr4, fr4, SPS, nsamples)
-
-	largest = max(rms1,rms2,rms3,rms4)
-
+	
 	print("rms 1: ", rms1)
 	print("rms 2: ", rms2)
 	print("rms 3: ", rms3)
 	print("rms 4: ", rms4)
+	
+	rms1, rms2, rms3, rms4;
+	
+	largest = max(rms1,rms2,rms3,rms4)
 
 	if (largest == rms1):
 		print("You're looking at: ", fr1, "Hz")
@@ -67,6 +69,25 @@ while True:
 		print("You're looking at: ", fr3, "Hz")
 	elif (largest == rms4):
 		print("You're looking at: ", fr4, "Hz")
+		
+def gui():
+	blinking_circles("a", "b", "c", "d", fr1, fr2, fr3, fr4)
+	
+	
+if __name__ == "__main__":
+	
+	process2 = multiprocessing.Process(target=gui)
+	
+	process2.start()
+	
+	data()
+
+	process2.terminate()
+
+
+	
+
+
 
 
 
