@@ -48,7 +48,7 @@ def blinking_circles(prompt1, prompt2, prompt3, prompt4, fr1, fr2, fr3, fr4):
 
     # run the game loop
     start_time = time.time()
-    while time.time() - start_time < 20:
+    while time.time() - start_time < 5:
 
         # handle events
         for event in pygame.event.get():

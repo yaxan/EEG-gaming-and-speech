@@ -76,13 +76,13 @@ def gui():
 	
 if __name__ == "__main__":
 	
-	process2 = multiprocessing.Process(target=gui)
+	process1 = multiprocessing.Process(target=gui)
 	
-	process2.start()
+	process1.start()
 	
 	data()
 
-	process2.terminate()
+	process1.terminate()
 
 
 	
