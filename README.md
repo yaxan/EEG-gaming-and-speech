@@ -18,7 +18,7 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
  * 4x 5.6kΩ Resistor
  * 2x 22kΩ Resistor
  * 2x 402Ω Resistor (Use 1x 200Ω Instead)
- * 0-2kΩ Potentiometer
+ * 1x 0-2kΩ Potentiometer
  * ADS1115 16-Bit ADC
  * Raspberry Pi 4 Model B 4GB RAM
  * [Ten20 Conductive Neurodiagnostic Electrode Paste](https://shop.openbci.com/products/ten20-conductive-paste-8oz-jar)
