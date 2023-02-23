@@ -70,19 +70,18 @@ def data():
 	elif (largest == rms4):
 		print("You're looking at: ", fr4, "Hz")
 		
-def gui():
-	blinking_circles("a", "b", "c", "d", fr1, fr2, fr3, fr4)
+
 	
 	
 if __name__ == "__main__":
 	
-	process1 = multiprocessing.Process(target=gui)
+	process1 = multiprocessing.Process(target=blinking_circles, args=("a", "b", "c", "d", fr1, fr2, fr3, fr4))
 	
 	process1.start()
 	
 	data()
 
-	process1.terminate()
+	
 
 
 	
