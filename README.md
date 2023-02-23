@@ -8,6 +8,9 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
 
 ## Circuit
 
+### Overview
+  This circuit is designed to take the differntial input of the FP2 and O2 regions on the brain, amplify signals from ~8-32Hz, and send to the Raspberry Pi for processing. It uses a combination of instrument amplifiers, high pass, low pass, and notch filters to filter and amplify the signals before they are sent to the ADC to conver the signal from analog to digital which the Raspberry Pi can then process.
+
 ### Parts List
  * 2x AD623AN Instrument Amplifier
  * 4x LM471CN Operational Amplifier
@@ -28,6 +31,9 @@ https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-
 
 ### Schematic
 ![EEGSchematic](https://user-images.githubusercontent.com/41130598/221042409-423589c1-2b3c-4a02-94aa-657f63461b93.png)
+Warning: Connecting electrodes to any part of your body can result in shock if anything goes wrong with the circuit, there are no safety features implemented to use at your own discretion.
+
+  Three electrodes are used, one at the FP2 region (one inch up from the naison and one inch right), one at the O2 region (one inch up from the inion and one inch right), and one on the earlobe or mastoid which connects to 3.3V ground. It's important to note the voltage values for the IAs and Op-Amps are with respect to 3.3V ground, while the ADC uses 0V ground. This is to up-shift the signal from the brain because the ADC does not handle negative values well, it's then shifted back down in the code. If you are attempting to reconstruct this circuit, it's important to have access to an oscilloscope and wave-function generator to debug and test it works fine before connecting to electrodes/ADC/RPI.
 
 ### Physical Circuit
 ![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
