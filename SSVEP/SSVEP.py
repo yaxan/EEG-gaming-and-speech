@@ -13,6 +13,7 @@ from adafruit_ads1x15.analog_in import AnalogIn
 import scipy as sp
 from scipy import signal
 
+from gui import blinking_circles
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
 
 #ADC Params
@@ -32,8 +33,11 @@ chan = AnalogIn(adc, ADS.P2, ADS.P3)
 
 fr1, fr2, fr3, fr4 = 8, 10, 12, 14 
 
+
 while True:
 	blinking_circles("a","b","c","d",fr1,fr2,fr3,fr4)
+	
+	t0 = time.perf_counter()
 	for i in range(nsamples): #Collects data every interval
 		st = time.perf_counter()
 		raw_signal[i] = chan.value*(4.096/32767)
