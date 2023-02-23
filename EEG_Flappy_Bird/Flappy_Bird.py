@@ -32,7 +32,7 @@ from analysis_data import rms_voltage_power_spectrum
 """
 ADC parameters
 """
-sps = 250 # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
+sps = 250 # Samples per second
 sinterval = 1.0/sps
 sampletime = 0.25 # how long to look back in time for current alpha waves
 raw_signal_len = int(sampletime * sps)

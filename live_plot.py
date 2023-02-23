@@ -4,7 +4,7 @@ Live plotting
 
 import os
 import sys
-sys.path.insert(1, os.path.dirname(os.getcwd())) #This allows importing files from parent folder
+sys.path.insert(1, os.path.dirname(os.getcwd())) #Allows importing files from parent folder
 import time
 import numpy as np
 import matplotlib.pyplot as plt

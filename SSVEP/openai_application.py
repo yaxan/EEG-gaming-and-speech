@@ -28,7 +28,7 @@ max_freq = 12 #maximum freq in Hz for alpha waves
 calibration_time = 5
 
 # Set OpenAI API key
-openai.api_key = ""
+openai.api_key = "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"
 
 # Set the initial prompt
 ice_breaker = "Hello, how are you doing today?"
@@ -55,12 +55,27 @@ def generate_user_response(prompt):
         stop='. '
     )
     time.sleep(1) 
-    message1 = response.choices[0].text.strip() #.split(":")[1].strip()
+    message1 = response.choices[0].text.strip().split(":")[1].strip()
     message1 = message1.split("\n")[0].strip()
-    message2 = response.choices[1].text.strip() #.split(":")[1].strip()
+    message2 = response.choices[1].text.strip().split(":")[1].strip()
     message2 = message2.split("\n")[0].strip()
     
     return message1, message2
+
+def generate_AI_response(prompt):
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=prompt,
+        max_tokens=50,
+        n=1,
+        temperature=0.5,
+        frequency_penalty=0.7,
+        presence_penalty=0.7,
+        stop='.'
+    )
+    time.sleep(1) 
+    return response.choices[0].text.strip()
+
 
 def generate_conversation_toAI(prompt):
     #generate conversation to AI
@@ -128,23 +143,18 @@ while True:
     # generate response based on user choice
     if user_choice == "1":
         print("You: " + message1)
-        #Text to Speech Here
         print("what do you want to say to the AI?")
         #add user's choice as prompt to ask the ai
         prompt += message1
         #generate conversation to AI
         user_choice, prompt = generate_conversation_toAI(prompt)
-        #Text to Speech Here 
         
         if user_choice == "4":
             print("Bot: Goodbye!")
             break
         else:
-            #Speech to Text Right Here
-            #Listen Here
-            #AI_response = generate_AI_response(prompt) 
-            print("Response: " + AI_response)
-            #prompt becomes 
+            AI_response = generate_AI_response(prompt) 
+            print("Bot: " + AI_response)
             prompt = AI_response
     elif user_choice == "2":
         print("You: " + message2)
@@ -158,8 +168,7 @@ while True:
             print("Bot: Goodbye!")
             break
         else:
-            #Speech to Text Right Here
-            #AI_response = generate_AI_response(prompt) 
+            AI_response = generate_AI_response(prompt) 
             print("Bot: " + AI_response)
             prompt = AI_response
     elif user_choice == "4":

@@ -1,4 +1,3 @@
-
 import os
 import sys
 sys.path.insert(1, os.path.dirname(os.getcwd())) #This allows importing files from parent folder
@@ -10,7 +9,7 @@ from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
 
 #These values should match saved data being loaded
 ACQTIME = 5
-SPS = 860 #Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300.
+SPS = 860 #Samples per second
 nsamples = ACQTIME*SPS
 sinterval = 1.0/SPS
 freq_min = 8
