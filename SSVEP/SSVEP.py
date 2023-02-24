@@ -1,8 +1,7 @@
 
 import sys
-sys.path.insert(1, os.path.dirname(os.getcwd())) #Allows importing files from parent folder
-
 import os
+sys.path.insert(1, os.path.dirname(os.getcwd())) #Allows importing files from parent folder
 import time
 import pickle
 import threading
@@ -12,7 +11,7 @@ import scipy as sp
 from scipy import signal
 from scipy.signal import butter, sosfilt
 import matplotlib.pyplot as plt
-
+import openai
 import board
 import busio
 import adafruit_ads1x15.ads1115 as ADS
@@ -22,9 +21,10 @@ import pyttsx3
 import speech_recognition as sr
 from gui import blinking_circles
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
-from SSVEP.speech import speech_to_text, text_to_speech
-from SSVEP.openai_application import get_prompts
+from speech_tools import speech_to_text, text_to_speech
+from openai_application import get_prompts
 
+openai.api_key = "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"
 
 #ADC Params
 ACQTIME = 5
@@ -98,6 +98,7 @@ if __name__ == "__main__":
 	while True:
 		
 		speech = speech_to_text(recognizer)
+		print(speech)
 		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
 		
 		process1 = multiprocessing.Process(
@@ -111,7 +112,7 @@ if __name__ == "__main__":
 		
 		choice = data() # SSVEP data collection to get response
 
-		text_to_speech(choice)
+		text_to_speech(engine, choice)
 
 
 
