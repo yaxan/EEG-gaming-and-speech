@@ -1,23 +1,28 @@
-import os
+
 import sys
 sys.path.insert(1, os.path.dirname(os.getcwd())) #Allows importing files from parent folder
+
+import os
 import time
 import pickle
 import threading
 import multiprocessing
 import numpy as np
-import matplotlib.pyplot as plt
-import board
-import busio
-import adafruit_ads1x15.ads1115 as ADS
 import scipy as sp
 from scipy import signal
 from scipy.signal import butter, sosfilt
+import matplotlib.pyplot as plt
+
+import board
+import busio
+import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
+
+import pyttsx3
+import speech_recognition as sr
 from gui import blinking_circles
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
-
-
+from SSVEP.speech import get_text_from_speech, text_to_speech
 
 
 #ADC Params
@@ -83,6 +88,7 @@ if __name__ == "__main__":
 	while True:
 		
 		# speech = get_text_from_speech
+		
 		# get_prompts function to get 4 prompts 
 		# prompt_1, .. prompt_4 = get_prompts(speech)
 

@@ -10,22 +10,14 @@ import scipy as sp
 import time
 from analysis_data import rms_voltage_power_spectrum
 
-"""
-ADC parameters
-"""
-sps = 250 # Samples per second to collect data. Options: 128, 250, 490, 920, 1600, 2400, 3300. Here, this is the same as frame rate
-sinterval = 1.0/sps
-sampletime = 0.25 # how long to look back in time for current alpha waves
-raw_signal_len = int(sampletime * sps)
-raw_signal = np.zeros(raw_signal_len)
-min_freq = 8 #minimum freq in Hz for alpha waves
-max_freq = 12 #maximum freq in Hz for alpha waves
-#i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)
-#adc = ADS.ADS1115(i2c)
-#adc.mode = Mode.CONTINUOUS
-#adc.gain = 1
-#adc.data_rate = sps
-calibration_time = 5
+def get_prompts(text):
+    """
+    Returns prompts <currently placeholder>
+    """
+
+    return "1", "2", "3", "4"
+
+
 
 # Set OpenAI API key
 openai.api_key = "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"

@@ -1,4 +1,3 @@
-from importlib_metadata import re
 import speech_recognition as sr
 import pyttsx3
 
