@@ -23,7 +23,7 @@ def speech_to_text(recognizer):
         except sr.RequestError as e:
             return "Request error: {e}"
 
-def text_to_speech(engine, str):
+def text_to_speech(engine, text):
     """
     Outputs speech (from speaker) based on input string
 
@@ -31,7 +31,7 @@ def text_to_speech(engine, str):
     :param str: string/text to be said out loud
     """
 
-    engine.say(str)
+    engine.say(text)
     engine.runAndWait()
 
     return
