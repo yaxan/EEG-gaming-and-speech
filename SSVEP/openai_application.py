@@ -1,6 +1,6 @@
 import openai
 import time
-from speech.py import speech_to_text, text_to_speech
+from speech_tools import speech_to_text, text_to_speech
 import speech_recognition as sr
 import pyttsx3
 
@@ -8,7 +8,7 @@ def get_prompts(text):
     # Generate three prompts using GPT-3
     message1 = openai.Completion.create(
         engine="davinci",
-        prompt=f"Complete the following sentence: '{text}'\nAI response:",
+        prompt=f"What would a human say in response to: '{text}'\nAI response:",
         max_tokens=50,
         n=1,
         stop=None,
@@ -17,7 +17,7 @@ def get_prompts(text):
 
     message2 = openai.Completion.create(
         engine="davinci",
-        prompt=f"What would an AI say in response to '{text}'?\nResponse:",
+        prompt=f"What would an AI say in response to the following if it were human: '{text}'\nResponse:",
         max_tokens=50,
         n=1,
         stop=None,
@@ -26,7 +26,7 @@ def get_prompts(text):
 
     message3 = openai.Completion.create(
         engine="davinci",
-        prompt=f"Imagine an AI conversation about '{text}'. What would the AI say?\nResponse:",
+        prompt=f"Imagine an AI conversation about '{text}'. What would the AI say if it was trying to act human?\nResponse:",
         max_tokens=50,
         n=1,
         stop=None,
@@ -57,4 +57,4 @@ def get_prompts(text):
 
 
 # Set OpenAI API key
-openai.api_key = "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"
+openai.api_key = ""

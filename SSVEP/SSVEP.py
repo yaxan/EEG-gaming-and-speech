@@ -11,10 +11,8 @@ import scipy as sp
 from scipy import signal
 from scipy.signal import butter, sosfilt
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 
 from openai_application import get_prompts
-=======
 import openai
 import board
 import busio
@@ -28,7 +26,7 @@ from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
 from speech_tools import speech_to_text, text_to_speech
 from openai_application import get_prompts
 
-openai.api_key = "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"
+openai.api_key = ""
 
 #ADC Params
 ACQTIME = 5
@@ -47,7 +45,7 @@ chan = AnalogIn(adc, ADS.P2, ADS.P3)
 
 FR1, FR2, FR3, FR4 = 8, 10, 12, 14 
 
-def data():
+def data(prompt_1, prompt_2, prompt_3, prompt_4):
 	t0 = time.perf_counter()
 	for i in range(nsamples): #Collects data every interval
 		st = time.perf_counter()
@@ -67,54 +65,55 @@ def data():
 	print("rms 3: ", rms3)
 	print("rms 4: ", rms4)
 	
-	rms1, rms2, rms3, rms4;
-	
 	largest = max(rms1,rms2,rms3,rms4)
->>>>>>> 209ae3fd8ca610a4f4cfb0415a91f9b7ddac99fa
+	
+	if (largest == rms1):
+		return prompt_1
+	elif (largest == rms2):
+		return prompt_2
+	elif (largest == rms3):
+		return prompt_3
+	elif (largest == rms4):
+		return prompt_4
+	else:
+		return "what"
 
 
 if __name__ == "__main__":
-
-<<<<<<< HEAD
-	while True:
-		
-		speech = 'How are you?'
-		# get_prompts function to get 4 prompts 
-		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
-		
-		print("1. " + prompt_1)
-		print("2. " + prompt_2)
-		print("3. " + prompt_3)
-=======
 	engine = pyttsx3.init()
 	engine.setProperty('rate', 150)
 	engine.setProperty('volume', 0.7)
 	recognizer = sr.Recognizer()
+		
 
 	# Step 1 - Prompt User to Initiate Conversation
 	text_to_speech(engine, "Hello, fancy a conversation?")
-
-
+	
 	while True:
 		
 		speech = speech_to_text(recognizer)
 		print(speech)
-		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
+		choice = "More Options"
 		
-		process1 = multiprocessing.Process(
-				target=blinking_circles, 
-				args=(
-					prompt_1, prompt_2, prompt_3, prompt_4, FR1, FR2, FR3, FR4
+		while choice == "More Options":
+			prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
+			print(prompt_1)
+			print(prompt_2)
+			print(prompt_3)
+			print(prompt_4)
+			
+			process1 = multiprocessing.Process(
+					target=blinking_circles, 
+					args=(
+						prompt_1, prompt_2, prompt_3, prompt_4, FR1, FR2, FR3, FR4
+					)
 				)
-			)
-		
-		process1.start() # GUI Appears on screen with prompts
-		
-		choice = data() # SSVEP data collection to get response
+			
+			process1.start() # GUI Appears on screen with prompts
+			
+			choice = data(prompt_1, prompt_2, prompt_3, prompt_4) # SSVEP data collection to get response
 
 		text_to_speech(engine, choice)
-
->>>>>>> 209ae3fd8ca610a4f4cfb0415a91f9b7ddac99fa
 
 
 
