@@ -97,7 +97,6 @@ if __name__ == "__main__":
 
 	while True:
 		
-		# Step 1 - Prompt User to Initiate Conversation
 		speech = speech_to_text(recognizer)
 		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
 		
