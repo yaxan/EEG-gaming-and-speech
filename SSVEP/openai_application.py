@@ -8,7 +8,6 @@ import numpy as np
 #import busio
 import scipy as sp
 import time
-from analysis_data import rms_voltage_power_spectrum
 
 def get_prompts(text):
     response = openai.Completion.create(
@@ -22,16 +21,26 @@ def get_prompts(text):
         stop='. '
     )
     time.sleep(1) 
-    message1 = response.choices[0].text.strip().split(":")[1].strip()
-    message1 = message1.split("\n")[0].strip()
-    message2 = response.choices[1].text.strip().split(":")[1].strip()
-    message2 = message2.split("\n")[0].strip()
+    message1 = response.choices[0].text.strip()
+    if ":" in message1:
+        message1 = message1.split(":")[1].strip()
+    if '\n' in message1:
+        message1 = message1.split("\n", 1)[0].strip()
+    if 'AI' in message1:
+        message1 = message1.split("AI", 1)[0].strip()
+    message2 = response.choices[1].text.strip()
+    if ":" in message2:
+        message2 = message2.split(":")[1].strip()
+    if '\n' in message2:
+        message2 = message2.split("\n", 1)[0].strip()
+    if 'AI' in message2:
+        message2 = message2.split("AI", 1)[0].strip()
     return message1, message2, "More Options", "Bye"
 
 
 
 # Set OpenAI API key
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Set the initial prompt
 ice_breaker = "Hello, how are you doing today?"
@@ -52,16 +61,26 @@ def generate_user_response(prompt):
         prompt=prompt,
         max_tokens=50,
         n=2,
-        temperature=0.5,
+        temperature=0.8,
         frequency_penalty=0.7,
-        presence_penalty=0.7,
+        presence_penalty=0.3,
         stop='. '
     )
     time.sleep(1) 
-    message1 = response.choices[0].text.strip().split(":")[1].strip()
-    message1 = message1.split("\n")[0].strip()
-    message2 = response.choices[1].text.strip().split(":")[1].strip()
-    message2 = message2.split("\n")[0].strip()
+    message1 = response.choices[0].text.strip()
+    if ":" in message1:
+        message1 = message1.split(":")[1].strip()
+    if '\n' in message1:
+        message1 = message1.split("\n", 1)[0].strip()
+    if 'AI' in message1:
+        message1 = message1.split("AI", 1)[0].strip()
+    message2 = response.choices[1].text.strip()
+    if ":" in message2:
+        message2 = message2.split(":")[1].strip()
+    if '\n' in message2:
+        message2 = message2.split("\n", 1)[0].strip()
+    if 'AI' in message2:
+        message2 = message2.split("AI", 1)[0].strip()
     
     return message1, message2
 
