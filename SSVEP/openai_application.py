@@ -11,11 +11,22 @@ import time
 from analysis_data import rms_voltage_power_spectrum
 
 def get_prompts(text):
-    """
-    Returns prompts <currently placeholder>
-    """
-
-    return "1", "2", "3", "4"
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=prompt,
+        max_tokens=50,
+        n=2,
+        temperature=0.5,
+        frequency_penalty=0.7,
+        presence_penalty=0.7,
+        stop='. '
+    )
+    time.sleep(1) 
+    message1 = response.choices[0].text.strip().split(":")[1].strip()
+    message1 = message1.split("\n")[0].strip()
+    message2 = response.choices[1].text.strip().split(":")[1].strip()
+    message2 = message2.split("\n")[0].strip()
+    return message1, message2, "More Options", "Bye"
 
 
 
