@@ -22,7 +22,8 @@ import pyttsx3
 import speech_recognition as sr
 from gui import blinking_circles
 from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
-from SSVEP.speech import get_text_from_speech, text_to_speech
+from SSVEP.speech import speech_to_text, text_to_speech
+from SSVEP.openai_application import get_prompts
 
 
 #ADC Params
@@ -86,16 +87,15 @@ def data():
 if __name__ == "__main__":
 
 	while True:
-		
-		# speech = get_text_from_speech
+		engine = pyttsx3.init()
+		engine.setProperty('rate', 150)
+		engine.setProperty('volume', 0.7)
+
+		recognizer = sr.Recognizer()
+		speech = speech_to_text(recognizer)
 		
 		# get_prompts function to get 4 prompts 
-		# prompt_1, .. prompt_4 = get_prompts(speech)
-
-		prompt_1 = "BLA"
-		prompt_2 = "BLA"
-		prompt_3 = "BLA"
-		prompt_4 = "BLA"
+		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
 		
 		process1 = multiprocessing.Process(
 				target=blinking_circles, 

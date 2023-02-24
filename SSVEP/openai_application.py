@@ -8,6 +8,9 @@ import numpy as np
 #import busio
 import scipy as sp
 import time
+from speech.py import speech_to_text, text_to_speech
+import speech_recognition as sr
+import pyttsx3
 
 def get_prompts(text):
     response = openai.Completion.create(
@@ -128,7 +131,13 @@ def generate_conversation_toAI(prompt):
     elif user_choice == '4':
         return user_choice, ""
 
-         
+engine = pyttsx3.init()
+engine.setProperty('rate', 150)
+engine.setProperty('volume', 0.7)
+
+recognizer = sr.Recognizer()
+prompt = speech_to_text(recognizer)
+        
 while True:
     print(prompt)
     
@@ -165,7 +174,8 @@ while True:
     # generate response based on user choice
     if user_choice == "1":
         print("You: " + message1)
-        print("what do you want to say to the AI?")
+        text_to_speech(engine, message1)
+        print("what do you want to say now?")
         #add user's choice as prompt to ask the ai
         prompt += message1
         #generate conversation to AI
@@ -175,7 +185,7 @@ while True:
             print("Bot: Goodbye!")
             break
         else:
-            AI_response = generate_AI_response(prompt) 
+            AI_response = speech_to_text(prompt) 
             print("Bot: " + AI_response)
             prompt = AI_response
     elif user_choice == "2":

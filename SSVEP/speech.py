@@ -1,7 +1,7 @@
 import speech_recognition as sr
 import pyttsx3
 
-def get_text_from_speech(recognizer):
+def speech_to_text(recognizer):
 
     """
     Returns speech based on listening
@@ -44,6 +44,6 @@ if __name__ == "__main__":
     recognizer = sr.Recognizer()
 
     text_to_speech(engine, "Say something in 3 seconds")
-    text = get_text_from_speech(recognizer)
+    text = speech_to_text(recognizer)
     text_to_speech(engine, "I think you said:")
     text_to_speech(engine, text)
