@@ -1,5 +1,9 @@
-# EEG gaming
-Work in progress: DIY Brain-Computer Interface (BCI) to play games using alpha/beta waves with custom-made EEG circuit.
+# EEG gaming and SSVEP Speech
+
+## Projects Description
+This project shows how you can build a Brain-Computer Interface with EEG to play games using alpha/beta waves as well as use steady state visually evoked potential (SSVEP) to communicate. The brain produces alpha waves in a relaxed state, like when your eyes are closed, in the 7.5-13 Hz range, and beta waves when you're concentrated in the 12-32 Hz range, at amplitudes less than 50 μV. We filter, amplify and process these waves originating from the occiptal lobe and classify between relaxed and concentrated states to play Flappy Bird. 
+
+We also decided to take our hands at a SSVEP communication system. The SSVEP is the EEG response evoked by visual stimuli at a specific frequency, which results in an increase in the EEG at that same frequency. Using this information we've built a system that allows a person A to speak to person B connected to the EEG. Person A's speech is fed to OpenAI's Rasa API to generate appropriate responses for person B to choose from by looking at a strobe with a specific frequency corresponding with the desired response. Their desired response is then converted from text to speech to allow both parties to communicate verbally.
 
 More details on how it works and how to replicate coming soon.
 
