@@ -86,34 +86,33 @@ def data():
 	
 if __name__ == "__main__":
 
-	while True:
-		engine = pyttsx3.init()
-		engine.setProperty('rate', 150)
-		engine.setProperty('volume', 0.7)
+	engine = pyttsx3.init()
+	engine.setProperty('rate', 150)
+	engine.setProperty('volume', 0.7)
+	recognizer = sr.Recognizer()
 
-		recognizer = sr.Recognizer()
-		speech = speech_to_text(recognizer)
+	# Step 1 - Prompt User to Initiate Conversation
+	text_to_speech(engine, "Hello, fancy a conversation?")
+
+
+	while True:
 		
-		# get_prompts function to get 4 prompts 
+		# Step 1 - Prompt User to Initiate Conversation
+		speech = speech_to_text(recognizer)
 		prompt_1, prompt_2, prompt_3, prompt_4 = get_prompts(speech)
 		
 		process1 = multiprocessing.Process(
 				target=blinking_circles, 
 				args=(
-					prompt_1, prompt_2, 
-					prompt_3, prompt_4, 
-					FR1, FR2, FR3, FR4
+					prompt_1, prompt_2, prompt_3, prompt_4, FR1, FR2, FR3, FR4
 				)
 			)
 		
 		process1.start() # GUI Appears on screen with prompts
 		
-		choice = data() # Data Collection Starts
+		choice = data() # SSVEP data collection to get response
 
-		# get chosen response prompt
-		# text to speech
-
-		# handle edge cases.
+		text_to_speech(choice)
 
 
 
