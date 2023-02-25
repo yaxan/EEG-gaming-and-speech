@@ -64,6 +64,8 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 ### GUI
 
+                    Need Information
+
 ### Speech to Text & Text to Speech
 #### Speech to Text
  We used the [Speech Recognition](https://pypi.org/project/SpeechRecognition/) library to listen for audio and convert it to text. "recognizer.listen" was used to collect the audio data, and "recognizer,recognize_google" was used to obtain the text version. 
