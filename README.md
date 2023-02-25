@@ -60,20 +60,7 @@ Warning: Connecting electrodes to any part of your body can result in shock if a
 
 ### Data Collection
 
-#### Imports
-
-  1. [busio](https://docs.circuitpython.org/en/latest/shared-bindings/busio/index.html)
-  2. [Ada Fruit as ADS](https://docs.circuitpython.org/projects/ads1x15/en/latest/index.html)
-  3. [Ada Fruit AnalongIn](https://docs.circuitpython.org/projects/ads1x15/en/latest/api.html)
-  4. [Scipy Signal SOS Filt](https://docs.scipy.org/doc/scipy/reference/signal.html)
-
-Data collected as either **"relaxed.pickle"** or **"concentrated.pickle"**. Data Filtrered using sosfilt function from SciPy. 
-
 ### Analysis
-
-#### Imports 
-
-  1. [SciPy Fourier Transforms](https://docs.scipy.org/doc/scipy/tutorial/fft.html) 
 
 The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. 
 
