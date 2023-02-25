@@ -62,15 +62,17 @@ Warning: Connecting electrodes to any part of your body can result in shock if a
 
 ### Analysis
 
-The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. 
+The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. The signal still contains noise beyond the 8-12 Hz range, so, we take the fourier transform of the raw voltage data over a 5 second period and set all frequency components outside 8-12 Hz to zero, and then reconstruct the brain wave using the inverse fourier transform.
 
 #### Relaxed and Concentrated State Data
+
+The following data is based on 30 samples of 5 second voltage time series data each for both relaxed and concentrated data:
+
 ![Relaxed and Concentrated State Data](https://user-images.githubusercontent.com/74623611/221341181-d602a7bc-076a-491f-b9f8-d3246c04d0b0.png)
 #### Relaxed and Concentrated State Power Spectrum
 ![Relaxed and Concentrated State Power Spectrum](https://user-images.githubusercontent.com/74623611/221341190-48766f1c-71db-4ed2-b3c6-0c397a96dadd.png)
 #### Relaxed and Concentrated State Brain Wave
 ![Relaxed and Concentrated State Brain Wave](https://user-images.githubusercontent.com/74623611/221341202-5c23d0e9-0eb2-4240-a81d-a5e5512eb718.png)
-
 
 
 ## EEG Gaming
@@ -80,11 +82,8 @@ The RMS voltage of a waveform between two frequency limits was calculated using 
 
 ## SSVEP Speech
 
-### GUI
-
-                    Need Information and Picture of the GUI Layout
-
 ### Speech to Text & Text to Speech
+
 #### Speech to Text
  We used the [Speech Recognition](https://pypi.org/project/SpeechRecognition/) library to listen for audio and convert it to text. "recognizer.listen" was used to collect the audio data, and "recognizer,recognize_google" was used to obtain the text version. 
  
