@@ -107,7 +107,7 @@ The RMS voltage of a waveform between two frequency limits was calculated using 
  We used the [pyttsx3](https://pypi.org/project/pyttsx3/) library to initiate an engine. The rate and volume were set, and the functions "engine.say" and "engine.runAndWait" were used to obtain text to speech. 
 
 ### AI Generated Script
-#### [OpenAI Text Completion](https://platform.openai.com/docs/guides/completion) "Davinci" Model
+#### [OpenAI Text Completion API](https://platform.openai.com/docs/guides/completion) "Davinci" Model
 
 The model model always generates three messages, with a fourth choice of getting three more messages. The model was called three times and fed three different prompts of:
   1. f"What would a human say in response to: '{**text**}'\nAI response:"
