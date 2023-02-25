@@ -10,7 +10,7 @@ More details on how it works and how to replicate coming soon.
 ## Live Flappy-Bird Demo
 https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
-## Live Speech Demo
+## Live SSVEP Speech Demo
 https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
 ## Circuit
@@ -60,7 +60,7 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 ## EEG Gaming
 
-## EEG Speech
+## SSVEP Speech
 
 ### GUI
 
