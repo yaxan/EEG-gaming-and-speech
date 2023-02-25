@@ -81,7 +81,7 @@ The model model always generates three messages, with a fourth choice of getting
   2. f"What would an AI say in response to the following if it were human: '{**text**}'\nResponse:"
   3. f"Imagine an AI conversation about '{**text**}'. What would the AI say if it was trying to act human?\nResponse:"
 
-where text is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format. 
+where **text** is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format. 
 
 #### Different Models Considered
   1. [Google T5 (Text-to-Text Transfer Transformer) Model](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) 
