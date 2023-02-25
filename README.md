@@ -71,7 +71,7 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
  We used the [Speech Recognition](https://pypi.org/project/SpeechRecognition/) library to listen for audio and convert it to text. "recognizer.listen" was used to collect the audio data, and "recognizer,recognize_google" was used to obtain the text version. 
  
  #### Text to Speech
- We used the [pyttsx3](https://pypi.org/project/pyttsx3/) library to initiate an enginer. The rate and volume were set, and the functions "engine.say" and "engine.runAndWait" were used to obtain text to speech. 
+ We used the [pyttsx3](https://pypi.org/project/pyttsx3/) library to initiate an engine. The rate and volume were set, and the functions "engine.say" and "engine.runAndWait" were used to obtain text to speech. 
 
 ### AI Generated Script
 #### [OpenAI Text Completion](https://platform.openai.com/docs/guides/completion) "Davinci" Model
