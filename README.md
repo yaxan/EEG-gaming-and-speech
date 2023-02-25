@@ -74,15 +74,7 @@ The following data is based on 30 samples of 5 second voltage time series data e
 #### Relaxed and Concentrated State Brain Wave
 ![Relaxed and Concentrated State Brain Wave](https://user-images.githubusercontent.com/74623611/221341202-5c23d0e9-0eb2-4240-a81d-a5e5512eb718.png)
 
-
-## EEG Gaming
-
-### Flappy Bird Code
-
-
-## SSVEP Speech
-
-### Speech to Text & Text to Speech
+## Speech to Text & Text to Speech
 
 #### Speech to Text
  We used the [Speech Recognition](https://pypi.org/project/SpeechRecognition/) library to listen for audio and convert it to text. "recognizer.listen" was used to collect the audio data, and "recognizer,recognize_google" was used to obtain the text version. 
