@@ -80,6 +80,10 @@ The model model always generates three messages, with a fourth choice of getting
   3. f"Imagine an AI conversation about '{**text**}'. What would the AI say if it was trying to act human?\nResponse:"
 where text is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format. 
 
+#### Different Models Considered
+  1. Google [T5 (Text-to-Text Transfer Transformer)](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) Model
+  2. [Rasa}(https://github.com/RasaHQ/rasa) Model
+
 ## Credits
 
 This project was based on the guidance from https://github.com/ryanlopezzzz/EEG with a modified circuit and new code for data-gathering, analysis, and gameplay. The repository had amazing explanations for everything and Ryan was great help when we reached out to him with questions. Much of their code no longer works as of January 2023 so we hope our project can help others replicate something similar for getting started with BCIs and EEG.
