@@ -10,6 +10,9 @@ More details on how it works and how to replicate coming soon.
 ## Live Flappy-Bird Demo
 https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
+## Live Speech Demo
+https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
+
 ## Circuit
 
 ### Overview
@@ -55,6 +58,9 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 ### Physical Circuit
 ![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
 
+## EEG Gaming
+
+## EEG Speech
 
 ### AI Generated Script
 #### OpenAI Text Completion "Davinci" Model
