@@ -77,7 +77,7 @@ Data collected as either **"relaxed.pickle"** or **"concentrated.pickle"**. Data
 
   1. [SciPy Fourier Transforms](https://docs.scipy.org/doc/scipy/tutorial/fft.html) 
 
-The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. [Gaussian evaluation](https://en.wikipedia.org/wiki/Gaussian_integral) was performed using the mean and standard deviation of the relaxed and concentrated data. From the data obtained, results that were positive and that were both smaller than the mean of the relaxed data and greater than the mean of the concentrated data were taken as the cross point of the two mean values. 
+The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. 
 
 #### Relaxed and Concentrated State Data
 ![Relaxed and Concentrated State Data](https://user-images.githubusercontent.com/74623611/221341181-d602a7bc-076a-491f-b9f8-d3246c04d0b0.png)
