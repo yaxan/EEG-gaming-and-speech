@@ -80,6 +80,7 @@ The model model always generates three messages, with a fourth choice of getting
   1. f"What would a human say in response to: '{**text**}'\nAI response:"
   2. f"What would an AI say in response to the following if it were human: '{**text**}'\nResponse:"
   3. f"Imagine an AI conversation about '{**text**}'. What would the AI say if it was trying to act human?\nResponse:"
+
 where text is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format. 
 
 #### Different Models Considered
