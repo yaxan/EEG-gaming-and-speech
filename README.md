@@ -81,8 +81,8 @@ The model model always generates three messages, with a fourth choice of getting
 where text is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format. 
 
 #### Different Models Considered
-  1. [Google T5 (Text-to-Text Transfer Transformer)](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) Model
-  2. [Rasa](https://github.com/RasaHQ/rasa) Model
+  1. [Google T5 (Text-to-Text Transfer Transformer) Model](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) 
+  2. [Rasa Model](https://github.com/RasaHQ/rasa) 
 
 ## Credits
 
