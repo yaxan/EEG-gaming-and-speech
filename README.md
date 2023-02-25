@@ -79,8 +79,11 @@ Data collected as either **"relaxed.pickle"** or **"concentrated.pickle"**. Data
 
 The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. [Gaussian evaluation](https://en.wikipedia.org/wiki/Gaussian_integral) was performed using the mean and standard deviation of the relaxed and concentrated data. From the data obtained, results that were positive and that were both smaller than the mean of the relaxed data and greater than the mean of the concentrated data were taken as the cross point of the two mean values. 
 
+  1. Relaxed and Concentrated State Data
 ![Relaxed and Concentrated State Data](https://user-images.githubusercontent.com/74623611/221341181-d602a7bc-076a-491f-b9f8-d3246c04d0b0.png)
+  2. Relaxed and Concentrated State Power Spectrum
 ![Relaxed and Concentrated State Power Spectrum](https://user-images.githubusercontent.com/74623611/221341190-48766f1c-71db-4ed2-b3c6-0c397a96dadd.png)
+  3. Relaxed and Concentrated State Brain Wave
 ![Relaxed and Concentrated State Brain Wave](https://user-images.githubusercontent.com/74623611/221341202-5c23d0e9-0eb2-4240-a81d-a5e5512eb718.png)
 
 
