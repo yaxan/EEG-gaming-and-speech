@@ -94,13 +94,13 @@ The model model always generates three messages, with a fourth choice of getting
 
 where **text** is the input that the model takes which is dervied from speech to text. With the messages generated from the model, string formatting using **Python** was done to obtain the desired output string format.
 
-### GUI
-
-The screen displays 4 circles with frequencies of 8 Hz, 10 Hz, 12 Hz, and 14 Hz. Under three of the circles are AI generated prompts, and under the fourth circle is an option to load more responses. The RMS value is caculated and the desired option is chosen to apply text to speech based on which frequency circle you are staring at. 
-
 #### Different Models Considered
   1. [Google T5 (Text-to-Text Transfer Transformer) Model](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) 
   2. [Rasa Model](https://github.com/RasaHQ/rasa) 
+
+### GUI
+
+The screen displays 4 circles with frequencies of 8 Hz, 10 Hz, 12 Hz, and 14 Hz. Under three of the circles are AI generated prompts, and under the fourth circle is an option to load more responses. The RMS value is caculated and the desired option is chosen to apply text to speech based on which frequency circle you are staring at. 
   
 ## Credits
 
