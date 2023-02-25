@@ -74,6 +74,8 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 ### AI Generated Script
 #### OpenAI Text Completion "Davinci" Model
 
+[OpenAI Text Completion](https://platform.openai.com/docs/guides/completion)
+
 The model model always generates three messages, with a fourth choice of getting three more messages. The model was called three times and fed three different prompts of:
   1. f"What would a human say in response to: '{**text**}'\nAI response:"
   2. f"What would an AI say in response to the following if it were human: '{**text**}'\nResponse:"
