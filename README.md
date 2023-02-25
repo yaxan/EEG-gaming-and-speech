@@ -119,6 +119,13 @@ where **text** is the input that the model takes which is dervied from speech to
 #### Different Models Considered
   1. [Google T5 (Text-to-Text Transfer Transformer) Model](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) 
   2. [Rasa Model](https://github.com/RasaHQ/rasa) 
+  
+## Contributers
+
+  1. [Jaeyoung Kang](https://github.com/j97kang)
+  2. [Joseph Mitchell](https://github.com/josephmitchell48)
+  3. [Saad Hossain](https://github.com/sdhossain)
+  4. [Yazan Masoud](https://github.com/yaxan)
 
 ## Credits
 
