@@ -5,8 +5,6 @@ This project shows how you can build a Brain-Computer Interface with EEG to play
 
 We also decided to take our hands at an SSVEP communication system. The SSVEP is the EEG response evoked by visual stimuli at a specific frequency, which results in an increase in the EEG at that same frequency. Using this information we've built a system that allows a person A to speak to person B connected to the EEG. Person A's speech is fed to OpenAI's [Text Completion](https://platform.openai.com/docs/guides/completion) API to generate appropriate responses for person B to choose from by looking at a strobe with a specific frequency corresponding with the desired response. Their desired response is then converted from text to speech to allow both parties to communicate verbally.
 
-More details on how it works and how to replicate coming soon.
-
 ## Live Flappy-Bird Demo
 https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
 
@@ -42,17 +40,17 @@ Warning: Connecting electrodes to any part of your body can result in shock if a
 
   Three electrodes are used, one at the FP2 region (one inch up from the naison and one inch right), one at the O2 region (one inch up from the inion and one inch right), and one on the earlobe or mastoid which connects to 3.3V ground. It's important to note the voltage values for the IAs and Op-Amps are with respect to the RPI's 3.3V ground, while the ADC uses the RPI's 0V ground. This is to up-shift the signal from the brain because the ADC does not handle negative values well, it's then shifted back down in the code. If you are attempting to reconstruct this circuit, it's important to have access to an oscilloscope and wave-function generator to debug and test it works fine before connecting to electrodes/ADC/RPI.
 
-Stage 1: Instrument Amplifier (Gain: ~92)
+  Stage 1: Instrument Amplifier (Gain: ~92)
 
-Stage 2: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
+  Stage 2: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
-Stage 3: High-Pass Filter (Gain: 1, Cutoff frequency: ~5Hz)
+  Stage 3: High-Pass Filter (Gain: 1, Cutoff frequency: ~5Hz)
 
-Stage 4: Low-Pass Filter (Gain: 1, Cutoff frequency: ~33Hz)
+  Stage 4: Low-Pass Filter (Gain: 1, Cutoff frequency: ~33Hz)
 
-Stage 5: Instrument Amplifier (Gain: ~46-500)
+  Stage 5: Instrument Amplifier (Gain: ~46-500)
 
-Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
+  Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 
 ### Physical Circuit
