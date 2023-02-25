@@ -64,7 +64,7 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 
 ### GUI
 
-                    Need Information
+                    Need Information and Picture of the GUI Layout
 
 ### Speech to Text & Text to Speech
 #### Speech to Text
