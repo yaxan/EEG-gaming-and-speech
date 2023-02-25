@@ -58,15 +58,26 @@ Stage 6: Notch Filter (Gain: 1, Cutoff frequency: ~60Hz)
 ### Physical Circuit
 ![EEG-circuit](https://user-images.githubusercontent.com/41130598/219847191-df59c969-152d-49f6-9052-b21f6ea1c098.png)
 
-## Data Collection 
+## Data Collection & Analysis
 
-###imports
+### Data Collection
+
+#### Imports
+
   1. [busio](https://docs.circuitpython.org/en/latest/shared-bindings/busio/index.html)
   2. [Ada Fruit as ADS](https://docs.circuitpython.org/projects/ads1x15/en/latest/index.html)
   3. [Ada Fruit AnalongIn](https://docs.circuitpython.org/projects/ads1x15/en/latest/api.html)
   4. [Scipy Signal SOS Filt](https://docs.scipy.org/doc/scipy/reference/signal.html)
 
 Data collected as either **"relaxed.pickle"** or **"concentrated.pickle"**. Data Filtrered using sosfilt function from SciPy. 
+
+### Analysis
+
+#### Imports 
+
+  1. [SciPy Fourier Transforms](https://docs.scipy.org/doc/scipy/tutorial/fft.html) 
+
+The RMS voltage of a waveform between two frequency limits was calculated using [Parseval's Theorem](https://blog.prosig.com/2015/01/06/rms-of-time-history-and-fft-spectrum/#:~:text=Parseval's%20theorem%20states%20that%20the,to%20the%20Sample%20Rate%2C%20SR.) and the obtained power spectrum. [Gaussian evaluation](https://en.wikipedia.org/wiki/Gaussian_integral) was performed using the mean and standard deviation of the relaxed and concentrated data. From the data obtained, results that were positive and that were both smaller than the mean of the relaxed data and greater than the mean of the concentrated data were taken as the cross point of the two mean values. 
 
 ## EEG Gaming
 
