@@ -82,7 +82,7 @@ where text is the input that the model takes which is dervied from speech to tex
 
 #### Different Models Considered
   1. Google [T5 (Text-to-Text Transfer Transformer)](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) Model
-  2. [Rasa}(https://github.com/RasaHQ/rasa) Model
+  2. [Rasa](https://github.com/RasaHQ/rasa) Model
 
 ## Credits
 
