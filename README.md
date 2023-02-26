@@ -81,7 +81,7 @@ The following data is based on 30 samples of 5 second voltage time series data e
 #### Speech to Text
  We used the [Speech Recognition](https://pypi.org/project/SpeechRecognition/) library to listen for audio and convert it to text. "recognizer.listen" was used to collect the audio data, and "recognizer,recognize_google" was used to obtain the text version. 
  
- #### Text to Speech
+#### Text to Speech
  We used the [pyttsx3](https://pypi.org/project/pyttsx3/) library to initiate an engine. The rate and volume were set, and the functions "engine.say" and "engine.runAndWait" were used to obtain text to speech. 
 
 ### AI Generated Script
@@ -97,6 +97,10 @@ where **text** is the input that the model takes which is dervied from speech to
 #### Different Models Considered
   1. [Google T5 (Text-to-Text Transfer Transformer) Model](https://paperswithcode.com/method/t5#:~:text=T5%2C%20or%20Text%2Dto%2D,to%20generate%20some%20target%20text.) 
   2. [Rasa Model](https://github.com/RasaHQ/rasa) 
+  
+## Improvements
+
+As of now, the SSVEP is more of a proof of concept. It works with a roughly 60% success rate at choosing which response the user looks at, which is better than random, but not great. There are many methods and algorithms that can be used to better decide from the data, such as taking into account the signal power of various frequencies' harmonics, calculating signal-to-ratio, and/or employing machine-learning. However, before any of these things are done, a better circuit that can handle more electrodes on the occiptal lobe and a larger range of frequencies would be necessary to make it worth it.
 
 ## Credits
 
