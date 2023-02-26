@@ -11,7 +11,7 @@ Please feel free to reach out if you are trying to replicate this project or do 
 https://user-images.githubusercontent.com/41130598/221386181-2ab2d7b2-f158-4215-b48e-124593a313df.mp4
 
 ## Live SSVEP Speech Demo
-https://user-images.githubusercontent.com/41130598/221386852-2912e592-5eda-4e28-bbea-ef6ad6a052aa.mp4
+https://user-images.githubusercontent.com/41130598/221387354-11f2b7b6-49ae-4d42-acd5-20c8b68936bf.mp4
 
 ## Circuit
 
