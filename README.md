@@ -5,7 +5,7 @@ This project shows how you can build a Brain-Computer Interface with EEG to play
 
 We also decided to take our hands at an SSVEP communication system. The SSVEP is the EEG response evoked by visual stimuli at a specific frequency, which results in an increase in the EEG at that same frequency. Using this information we've built a system that allows a person A to speak to person B connected to the EEG. Person A's speech is fed to OpenAI's [Text Completion](https://platform.openai.com/docs/guides/completion) API to generate appropriate responses for person B to choose from by looking at a strobe with a specific frequency corresponding with the desired response. Their desired response is then converted from text to speech to allow both parties to communicate verbally.
 
-Please feel free to reach out if you are trying to replicate this project or do something similar and have any questions.
+Please feel free to use anything you see in this repo if you are trying to replicate this project or do something similar and reach out if you have any questions.
 
 ## Live Flappy-Bird Demo
 https://user-images.githubusercontent.com/41130598/221386181-2ab2d7b2-f158-4215-b48e-124593a313df.mp4
