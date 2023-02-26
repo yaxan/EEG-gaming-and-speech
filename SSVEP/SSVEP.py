@@ -22,14 +22,14 @@ from adafruit_ads1x15.analog_in import AnalogIn
 import pyttsx3
 import speech_recognition as sr
 from gui import blinking_circles
-from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
+from signal_tools import rms_voltage_power_spectrum, brain_signal_extraction
 from speech_tools import speech_to_text, text_to_speech
 from openai_application import get_prompts
 
-openai.api_key = ""
+openai.api_key = "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"
 
 #ADC Params
-ACQTIME = 5
+ACQTIME = 8
 SPS = 860 #samples per second
 nsamples = int(ACQTIME*SPS)
 sinterval = 1.0/SPS

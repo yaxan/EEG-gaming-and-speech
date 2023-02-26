@@ -5,7 +5,7 @@ import numpy as np
 from scipy.fft import fft, ifft, fftfreq
 import matplotlib.pyplot as plt
 import pickle
-from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
+from signal_tools import rms_voltage_power_spectrum, brain_signal_extraction
 
 #These values should match saved data being loaded
 ACQTIME = 5

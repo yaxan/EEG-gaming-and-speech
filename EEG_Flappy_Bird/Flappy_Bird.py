@@ -27,7 +27,7 @@ import scipy as sp
 from scipy import signal
 
 sys.path.insert(1, os.path.dirname(os.getcwd()))
-from analysis_data import rms_voltage_power_spectrum
+from signal_tools import rms_voltage_power_spectrum
 
 """
 ADC parameters
@@ -53,7 +53,7 @@ PIPE_SEP = 220 # Top and bottom pipe separation distance
 FLOOR_SPEED = 1 # Floor scroll speed
 PIPE_SPEED = 1 # Pipe scroll speed
 PIPE_HEIGHT = [200,300,400] # Pipe height possibilities
-PIPE_INTERVAL = 3000 # Time between pipes in ms
+PIPE_INTERVAL = 2000 # Time between pipes in ms
 SCORE_RATE = 0.005 # Rate at which score increases per tick
 INITIAL_BIRD_X = 50 # initial y coordinate of the bird
 VELOCITY = 0.5 # basically the proportionality factor between the eeg signal and bird velocity in game play

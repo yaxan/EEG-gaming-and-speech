@@ -11,7 +11,7 @@ import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 import scipy as sp
 from scipy import signal
-from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
+from signal_tools import rms_voltage_power_spectrum, brain_signal_extraction
 
 #import files from parent folder
 sys.path.insert(1, os.path.dirname(os.getcwd())) 

@@ -13,7 +13,7 @@ def speech_to_text(recognizer):
     # Use the default microphone as the audio source
     with sr.Microphone() as source:
         # Listen for audio and convert it to text
-        audio = recognizer.listen(source, timeout=3)
+        audio = recognizer.listen(source, timeout=2, phrase_time_limit=3)
 
         try:
             text = recognizer.recognize_google(audio)

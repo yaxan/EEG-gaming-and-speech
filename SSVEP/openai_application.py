@@ -8,7 +8,7 @@ def get_prompts(text):
     # Generate three prompts using GPT-3
     message1 = openai.Completion.create(
         engine="davinci",
-        prompt=f"What would a human say in response to: '{text}'\nAI response:",
+        prompt=f"What would a human generally say in response to: '{text}'\nAI response:",
         max_tokens=50,
         n=1,
         stop=None,
@@ -17,7 +17,7 @@ def get_prompts(text):
 
     message2 = openai.Completion.create(
         engine="davinci",
-        prompt=f"What would an AI say in response to the following if it were human: '{text}'\nResponse:",
+        prompt=f"What would a human say in response to: '{text}'\nAI response:",
         max_tokens=50,
         n=1,
         stop=None,
