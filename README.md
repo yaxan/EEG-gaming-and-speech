@@ -100,7 +100,7 @@ where **text** is the input that the model takes which is dervied from speech to
   
 ## Improvements
 
-As of now, the SSVEP is more of a proof of concept. It works with a roughly 60% success rate at choosing which response the user looks at, which is better than random, but not great. There are many methods and algorithms that can be used to better decide from the data, such as taking into account the signal power of various frequencies' harmonics, calculating signal-to-ratio, and/or employing machine-learning. However, before any of these things are done, a better circuit that can handle more electrodes on the occiptal lobe and a larger range of frequencies would be necessary to make it worth it.
+As of now, the SSVEP is more of a proof of concept. It works with a roughly 60% success rate at choosing which response the user looks at, which is better than random, but not great. There are many methods and algorithms that can be used to better decide from the data, such as taking into account the signal power of various frequencies' harmonics, calculating signal-to-noise ratio, and/or employing machine-learning. However, before any of these things are done, a better circuit that can handle more electrodes on the occiptal lobe and a larger range of frequencies would be necessary to make it worth it.
 
 ## Credits
 
