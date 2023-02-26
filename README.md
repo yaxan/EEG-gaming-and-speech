@@ -8,10 +8,12 @@ We also decided to take our hands at an SSVEP communication system. The SSVEP is
 Please feel free to reach out if you are trying to replicate this project or do something similar and have any questions.
 
 ## Live Flappy-Bird Demo
-https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
+https://user-images.githubusercontent.com/41130598/221386181-2ab2d7b2-f158-4215-b48e-124593a313df.mp4
+
+
 
 ## Live SSVEP Speech Demo
-https://user-images.githubusercontent.com/41130598/219846836-aeb79bd7-619f-477f-9fea-56bf63279e5b.mp4
+
 
 ## Circuit
 
