@@ -26,7 +26,7 @@ from signal_tools import rms_voltage_power_spectrum, brain_signal_extraction
 from speech_tools import speech_to_text, text_to_speech
 from openai_application import get_prompts
 
-openai.api_key = "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"
+openai.api_key = "INSERT API KEY HERE"
 
 #ADC Params
 ACQTIME = 8
