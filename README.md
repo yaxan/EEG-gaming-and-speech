@@ -107,4 +107,4 @@ As of now, the SSVEP is more of a proof of concept. It works with a roughly 60% 
 This project was based on the guidance from https://github.com/ryanlopezzzz/EEG with a modified circuit and new code for data-gathering, analysis, and gameplay. The repository had amazing explanations for everything and Ryan was great help when we reached out to him with questions. Much of their code no longer works as of January 2023 so we hope our project can help others replicate something similar for getting started with BCIs and EEG.
 
 Further credits to WATOLINK for the idea of using SSVEP for selecting from a set of options to communicate https://www.linkedin.com/posts/watolink_braincomputerinterface-eeg-gpt3-activity-7027809460567883776-PlWR?utm_source=share&utm_medium=member_ios
-All implementation, including AI use, was 100% our own.
+All implementation beyond the ideas of text-to-speech and using SSVEP was 100% our own.
