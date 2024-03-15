@@ -9,8 +9,9 @@ import board
 import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
-
-from analysis_data import rms_voltage_power_spectrum, brain_signal_extraction
+import scipy as sp
+from scipy import signal
+from signal_tools import rms_voltage_power_spectrum, brain_signal_extraction
 
 #import files from parent folder
 sys.path.insert(1, os.path.dirname(os.getcwd())) 
@@ -58,8 +59,8 @@ while stopper != 'y': #Loops every time user records data
     print()
     #adc.read(2, True)
     time_series = np.zeros(nsamples, 'float')
-    butter_lowpass = butter(10, 60, 'lowpass', fs=860, output='sos')
-    filtered = sosfilt(butter_lowpass, nsamples)
+    sos = butter(10, 60, 'lowpass', fs=860, output='sos')
+    
     t0 = time.perf_counter()
     for i in range(nsamples): #Collects data every sinterval
         startime = time.perf_counter()
@@ -68,21 +69,25 @@ while stopper != 'y': #Loops every time user records data
         time_series[i] -= 3.3 #ADC ground is 3.3 volts above circuit ground
         while (time.perf_counter() - startime) <= sinterval:
             pass
+    filtered = sp.signal.sosfilt(sos,time_series)
     t = time.perf_counter() - t0    
     print('Time elapsed: %.9f s.' % t)
 
     freq = np.fft.fftfreq(nsamples, d=1.0/SPS)
-    ps, rms = rms_voltage_power_spectrum(time_series, min_freq, max_freq, SPS, nsamples)
+    ps, rms = rms_voltage_power_spectrum(filtered, min_freq, max_freq, SPS, nsamples)
     print('RMS of Alpha Wave Voltage: ', rms)
     
-    fig, ax = plt.subplots(ncols=2, nrows=1, figsize=[10,5])
+    fig, ax = plt.subplots(ncols=3, nrows=1, figsize=[25,10])
     times = np.arange(0, ACQTIME, sinterval)
-    ax[0].plot(times, time_series)
-    ax[0].set(xlabel='Time (s)', ylabel='Voltage', title='Raw Signal of Brain Waves')    
-    plt.xlim(0,200)
-    ax[1].plot(freq, ps)
+    
+    ax[0].plot(times, filtered)
+    ax[0].set(xlabel='Time (s)', ylabel='Voltage', title='Raw Signal of Brain Waves') 
+       
+    ax[1].set_xlim((0,200))
     ax[1].set(xlabel='Frequency (Hz)', ylabel='Power', title='Power Spectrum')  
-    brain_wave = brain_signal_extraction(time_series, min_freq, max_freq, freq)  
+    ax[1].plot(freq, ps)
+    
+    brain_wave = brain_signal_extraction(filtered, min_freq, max_freq, freq)  
     ax[2].plot(times, brain_wave)
     ax[2].set(xlabel='Time (s)', ylabel='Voltage', title='Brain Alpha Wave')    
     fig.show()
@@ -95,13 +100,13 @@ while stopper != 'y': #Loops every time user records data
                 file = open(file_path, 'rb')
                 brain_data = pickle.load(file)
                 file.close()
-                brain_data.append(time_series)
+                brain_data.append(filtered)
                 file = open(file_path, 'wb')
                 pickle.dump(brain_data, file)
                 file.close()
             #create a new file
             else: 
-                brain_data = [time_series]
+                brain_data = [filtered]
                 file = open(file_path, 'wb')
                 pickle.dump(brain_data, file)
                 file.close()
