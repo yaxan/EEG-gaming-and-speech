@@ -111,3 +111,8 @@ This project was based on the guidance from https://github.com/ryanlopezzzz/EEG 
 
 Further credits to WATOLINK for the idea of using SSVEP for selecting from a set of options to communicate https://www.linkedin.com/posts/watolink_braincomputerinterface-eeg-gpt3-activity-7027809460567883776-PlWR?utm_source=share&utm_medium=member_ios
 All implementation was 100% our own.
+
+# References
+
+[1] X. Chen et al., “High-speed spelling with a noninvasive brain–computer interface,” Proceedings of the National Academy of Sciences, vol. 112, no. 44, Oct. 2015. doi:10.1073/pnas.1508080112 
+[2] M. Nakanishi, Yijun Wang, Yu-Te Wang, Y. Mitsukura, and Tzyy-Ping Jung, “An approximation approach for rendering visual flickers in SSVEP-based BCI using monitor refresh rate,” 2013 35th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), Jul. 2013. doi:10.1109/embc.2013.6609966 
